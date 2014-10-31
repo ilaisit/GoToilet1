@@ -67,7 +67,7 @@ public class viewGarden extends HttpServlet {
 		System.out.println("parsing kindergarten");
 		// The KEY received from CLIENT is "UserID". expecting to receive the userID = kindergartenID
 		String userID = currentGarden.getString("userID");
-		List<KidData> kidsList = dbManagerO.getInstance().getListOfKids(
+		List<KidData> kidsList = dbManager.getInstance().getListOfKids(
 				userID);
 		JSONObject outputList = new JSONObject();
 		for (KidData kid : kidsList) {

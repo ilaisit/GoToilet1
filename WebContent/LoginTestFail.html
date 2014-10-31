@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>SERVER TEST</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src="jquery.js"></script>
+
+        <script>
+            function postToServer() {
+                
+                data = {
+                    name: "oz@gmail.com",
+                    pass: "1234"
+                }
+                $.ajax({
+                    url: "http://localhost:8080/diaryServer/newLogin",
+                    method: 'POST',
+                    data: JSON.stringify(data),
+                    success: function(resData) {
+                        document.getElementById("mainDiv").innerHTML = resData;
+                    },
+                    error: function() {
+                        alert("server error");
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <button onclick="postToServer()">click me</button>
+        <div id="mainDiv">
+        </div>
+
+    </body>
+</html>

@@ -1,6 +1,5 @@
 package diaryServer;
 
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +22,10 @@ public class mainEntryPoint_testAWS_RDS {
 			resultData = dbManager.getInstance().login("hanalevi1@gmail.com", "hanal");
 			System.out.println("should be true: " + (resultData.getUserId().equals("10") && resultData.getLoginStatus() == ELoginStatus.EUserType_Parent));
 			
+			resultData = dbManager.getInstance().login("test", "test");
+			System.out.println("&^&*****should be true: " + (resultData.getUserId().equals("13") && resultData.getLoginStatus() == ELoginStatus.EUserType_Garden));
+			System.out.println("#@(# " + resultData.getUserId());
+			
 			//Testing getting kids list
 			List<KidData> kids = null;
 			kids = dbManager.getInstance().getListOfKids("1"); //מיכל ירוקה
@@ -34,13 +37,18 @@ public class mainEntryPoint_testAWS_RDS {
 			kids = dbManager.getInstance().getListOfKids("-1"); //invalid
 			System.out.println("should be true: " + (kids == null));
 
-			dbManager.getInstance().getEventsForKid("1", 7);
-			dbManager.getInstance().getEventsForKid("2", 1);
-			dbManager.getInstance().getEventsForKid("3", 30);
+			List<EventData> events = null;
+			events = dbManager.getInstance().getEventsForKid("0", 7);
+			System.out.println("should be 2: " + events.size());
+			events = dbManager.getInstance().getEventsForKid("0", 30);
+			System.out.println("should be 3: " + events.size());
+			events = dbManager.getInstance().getEventsForKid("1", 1);
+			System.out.println("should be 0: " + events.size());
+			events = dbManager.getInstance().getEventsForKid("2", 30);
+			System.out.println("should be 0: " + events.size());
 			
-			dbManager.getInstance().insertNewEvent(new EventData("", "1", "1", new ArrayList<IndependenceStages>(), true, ""));
-			dbManager.getInstance().insertNewEvent(new EventData("", "1", "1", new ArrayList<IndependenceStages>(), true, ""));
-
+			dbManager.getInstance().insertNewEvent(new EventData("", "1", "1", new ArrayList<IndependenceStages>(), true, "",true, false));
+			dbManager.getInstance().insertNewEvent(new EventData("", "1", "1", new ArrayList<IndependenceStages>(), true, "",true, false));
 			
 		} catch (Exception e) {
 			e.printStackTrace();

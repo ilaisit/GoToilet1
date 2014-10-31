@@ -11,13 +11,14 @@ public class EventData {
 	private List<IndependenceStages> createdIndependenceStages;
 	private boolean kidIsInitiator;
 	private String comments;
-	private String isKaki, isPipi;
+	private boolean isKaki, isPipi;
 
 	public EventData() {
 		createdIndependenceStages = new ArrayList<IndependenceStages>();
 	}
 
-	public EventData(String dateTime, String insertingUserId, String kidId, List<IndependenceStages> createdIndependenceStages, boolean kidIsInitiator, String comments, String isKaki, String isPipi) {
+	public EventData(String dateTime, String insertingUserId, String kidId, List<IndependenceStages> createdIndependenceStages, boolean kidIsInitiator,
+			String comments, boolean isKaki, boolean isPipi) {
 		this.dateTime = dateTime;
 		this.insertingUserId = insertingUserId;
 		this.kidId = kidId;
@@ -27,7 +28,7 @@ public class EventData {
 		this.isKaki = isKaki;
 		this.isPipi = isPipi;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder independeceStages = new StringBuilder();
@@ -86,19 +87,29 @@ public class EventData {
 		this.comments = comments;
 	}
 
-	public String getIsPipi() {
+	public boolean getIsPipi() {
 		return isPipi;
 	}
 
-	public void setIsPipi(String isPipi) {
+	public void setIsPipi(boolean isPipi) {
 		this.isPipi = isPipi;
 	}
 
-	public String getIsKaki() {
+	public boolean getIsKaki() {
 		return isKaki;
 	}
 
-	public void setIsKaki(String isKaki) {
+	public void setIsKaki(boolean isKaki) {
 		this.isKaki = isKaki;
+	}
+
+	public String getCreatedIndependenceStagesSerialized() {
+		StringBuilder retVal = new StringBuilder();
+
+		for (IndependenceStages currentIndependenceStage : createdIndependenceStages) {
+			retVal.append(String.format("%s,%s;", currentIndependenceStage.getIndependenceStage(), currentIndependenceStage.getAssistantLevel()));
+		}
+
+		return retVal.toString();
 	}
 }

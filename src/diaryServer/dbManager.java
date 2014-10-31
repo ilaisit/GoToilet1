@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
@@ -53,6 +54,7 @@ public class dbManager {
 		try {
 			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, CLASS_NAME, "Getting kids from DB");
 			Statement selectUsersStatement = connectionObject.createStatement();
+			selectUsersStatement.executeQuery(Helpers.GET_DB_SELECTION_QUERY);
 			ResultSet returnedUsers = selectUsersStatement.executeQuery(Helpers.GET_KIDS_QUERY);
 			while (returnedUsers.next()) {
 				kidsDataList.add(new KidDataInternal(returnedUsers.getString("kid_name"), returnedUsers.getString("idkids"), returnedUsers
@@ -104,8 +106,8 @@ public class dbManager {
 	/**
 	 * Call this method with a new event and it will be inserted to the db. This method does not verify the details!
 	 * 
-	 * @param the
-	 *            event data
+	 * @param newEvent
+	 *            the event data, date will be null if there is no required time
 	 * @return -1 if not initialized or failed, the id of the new event otherwise
 	 */
 	public int insertNewEvent(EventData newEvent) {
@@ -113,15 +115,33 @@ public class dbManager {
 			return -1;
 		}
 		String methodName = "insertNewEvent";
-		int newEntryId = -1;
+		int nextEventIdForReal = 0;
 
 		try {
+
+			Statement selectUsersStatement = connectionObject.createStatement();
+			ResultSet nextEventId = selectUsersStatement.executeQuery(Helpers.GET_EVENTS_COUNT_QUERY);
+			if (!nextEventId.next()) {
+				java.util.Random rans = new Random();
+				nextEventIdForReal = rans.nextInt(99999);
+			} else {
+				nextEventIdForReal = nextEventId.getInt("Total");
+			}
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:00");
+			String query = Helpers.INSERT_NEW_EVENT_QUERY.replace(Helpers.ID_EVENTS_LOG, "" + nextEventIdForReal)
+					.replace(Helpers.COMMENTS, newEvent.getComments()).replace(Helpers.DATE_TIME, 
+							(newEvent.getDateTime().isEmpty() ? sdf.format(Calendar.getInstance().getTime()).toString() : newEvent.getDateTime()))
+					.replace(Helpers.INSERTING_USER_ID, newEvent.getInsertingUserId()).replace(Helpers.IS_KAKI, newEvent.getIsKaki() == true ? "1" : "0")
+					.replace(Helpers.IS_PIPI, newEvent.getIsPipi() == true ? "1" : "0").replace(Helpers.KID_ID, newEvent.getKidId())
+					.replace(Helpers.INDEPENDENCE_STAGES, newEvent.getCreatedIndependenceStagesSerialized());
+
+			selectUsersStatement.executeUpdate(query);
 		} catch (Exception ex) {
 			Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName,
 					"Error occured during inserting new event. Event data: " + newEvent.toString() + ", error: " + ex.getMessage());
-			newEntryId = -1;
+			nextEventIdForReal = -1;
 		}
-		return newEntryId;
+		return nextEventIdForReal;
 	}
 
 	/**
@@ -141,48 +161,48 @@ public class dbManager {
 			return null;
 		}
 
-//		try {
-//			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, methodName, "Getting events for kid: " + kidId);
-//			KidDataInternal selectedKid = null;
-//			for (KidDataInternal currentKid : kidsDataList) {
-//				if (currentKid.getKidId().equals(kidId)) {
-//					selectedKid = currentKid;
-//					break;
-//				}
-//			}
-//
-//			if (selectedKid == null) {
-//				return null;
-//			}
-//			
-//			Statement selectUsersStatement = connectionObject.createStatement();
-//			Calendar cl = Calendar.getInstance();
-//			cl.add(Calendar.DAY_OF_MONTH, -daysFromToday);
-//			SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-//
-//			String query = Helpers.GET_EVENTS_FOR_KID_QUERY.replace(Helpers.KID_ID, selectedKid.getKidId()).replace(Helpers.DATE_TIME, sdf.format(cl.getTime()));
-//			selectUsersStatement.executeQuery(query);
-//			ResultSet returnedUsers = selectUsersStatement.executeQuery(Helpers.GET_USERS_QUERY);
-//			while (returnedUsers.next()) {
-//				List<IndependenceStages> stages = new ArrayList<IndependenceStages>();
-//				String[] stagesAsStringArray = returnedUsers.getString("independence_stages").split(";");
-//				for(String currentStage : stagesAsStringArray) {
-//					String[] currentStageSplitted = currentStage.split(",");
-//					stages.add(new IndependenceStages(Enum.valueOf(EIndependenceStages.class, currentStageSplitted[0]), 
-//							Enum.valueOf(EAssistantLevel.class, currentStageSplitted[1])));
-//				}
-//				retVal.add(new EventData(returnedUsers.getString("date_time"), 
-//						returnedUsers.getString("inserting_user_id"),
-//						returnedUsers.getString("kid_id"), 
-//						stages, 
-//						returnedUsers.getString("kid_is_initiator") == "true" ? true : false, 
-//						returnedUsers.getString("comments")));
-//			}
-//			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, CLASS_NAME, "Done.");
-//			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, methodName, "Done.");
-//		} catch (Exception ex) {
-//			Logger.getInstance().Log(ELogLevel.critical, CLASS_NAME, methodName, "Critical error, cannot get users! " + ex.getMessage());
-//		}
+		try {
+			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, methodName, "Getting events for kid: " + kidId);
+			KidDataInternal selectedKid = null;
+			for (KidDataInternal currentKid : kidsDataList) {
+				if (currentKid.getKidId().equals(kidId)) {
+					selectedKid = currentKid;
+					break;
+				}
+			}
+
+			if (selectedKid == null) {
+				return null;
+			}
+
+			Statement selectUsersStatement = connectionObject.createStatement();
+			Calendar cl = Calendar.getInstance();
+			cl.add(Calendar.DAY_OF_MONTH, -daysFromToday);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+
+			String query = Helpers.GET_EVENTS_FOR_KID_QUERY.replace(Helpers.KID_ID, selectedKid.getKidId())
+					.replace(Helpers.DATE_TIME, sdf.format(cl.getTime()));
+			ResultSet returnedEvents = selectUsersStatement.executeQuery(query);
+			while (returnedEvents.next()) {
+				List<IndependenceStages> stages = new ArrayList<IndependenceStages>();
+				String[] stagesAsStringArray = returnedEvents.getString("independence_stages").split(";");
+				if (stagesAsStringArray.length > 0 && !stagesAsStringArray[0].isEmpty()) {
+					for (String currentStage : stagesAsStringArray) {
+						String[] currentStageSplitted = currentStage.split(",");
+						if (currentStageSplitted.length > 0 && !currentStageSplitted[0].isEmpty()) {
+							stages.add(new IndependenceStages(Enum.valueOf(EIndependenceStages.class, currentStageSplitted[0]), Enum.valueOf(
+									EAssistantLevel.class, currentStageSplitted[1])));
+						}
+					}
+				}
+				retVal.add(new EventData(returnedEvents.getString("date_time"), returnedEvents.getString("inserting_user_id"), returnedEvents
+						.getString("kid_id"), stages, returnedEvents.getString("kid_is_initiator") == "1" ? true : false, returnedEvents.getString("comments"),
+						returnedEvents.getString("isKaki") == "1" ? true : false, returnedEvents.getString("isPipi") == "1" ? true : false));
+			}
+			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, methodName, "Done.");
+		} catch (Exception ex) {
+			Logger.getInstance().Log(ELogLevel.critical, CLASS_NAME, methodName, "Critical error, cannot get users! " + ex.getMessage());
+		}
 
 		return retVal;
 	}
@@ -209,12 +229,13 @@ public class dbManager {
 					break;
 				}
 			}
-			if (givenUser == null || givenUser.getUserType() != ELoginStatus.EUserType_Garden) {
+			if (givenUser == null) {
 				return null;
 			}
 
 			for (KidDataInternal currentInternalKid : kidsDataList) {
-				if (givenUser.getUserId().equals(currentInternalKid.getGardenId())) {
+				if (givenUser.getUserId().equals(currentInternalKid.getGardenId())
+						||givenUser.getUserId().equals(currentInternalKid.getParentId())) {
 					retVal.add(currentInternalKid.toKidData());
 				}
 			}

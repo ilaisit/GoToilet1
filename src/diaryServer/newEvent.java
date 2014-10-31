@@ -11,13 +11,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 import org.json.JSONWriter;
+
 /**
- * the request must contain kidID and and daysFromToday
+ * REQUEST STRUCTUR FOR NEW EVENT IS DONE WHEN ASKING FOR /newEvent (url page)
+ * STRCUTRE: (key=value)
+ * 	"KidID" = "12345"(string)
+ *  "comments" = "bla"(string)
+ *  "dateTime" = "11.11.11"(string)
+ *  "isKaki" = True/False (boolean)
+ *  "isPipi" = True/false(boolean)
+
  * @author ilaisit
  *
  */
-public class viewKid extends HttpServlet {
-	
+public class newEvent extends HttpServlet {
+
 	/**
 	 * 
 	 */
@@ -50,14 +58,15 @@ public class viewKid extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		parseRequest(req, resp);
 	}
 
 	private void parseRequest(HttpServletRequest request,
 			HttpServletResponse response) {
+		System.out.println("making now new kid event");
 		System.out.println("Trying to view kid");
 		String jsonReq = extractJsonFromRequest(request);
-		JSONObject currentKid = new JSONObject(jsonReq);
+		JSONObject currentEventJson = new JSONObject(jsonReq);
 
 		JSONWriter writer = null;
 		try {
@@ -66,33 +75,46 @@ public class viewKid extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("parsing kid events");
-		// The KEY received from CLIENT is "UserID". expecting to receive the
-		// userID = KidID
-		String kidID = currentKid.getString("kidID");
-		//recive value from client p - that says how many days ago he wants data for the kids events
-		int daysFromToday = currentKid.getInt("daysFromToday");
-		List<EventData> kidEvents = dbManager.getInstance().getEventsForKid(kidID, daysFromToday);
+		System.out.println("parsing the input event");
+		// independence stages is not handlet meanwhile! maybe next version
+		EventData newEvent = new EventData();
+		newEvent.setKidId(currentEventJson.getString("kidID"));
+		newEvent.setComments(currentEventJson.getString("comments"));
+		newEvent.setDateTime(currentEventJson.getString("dateTime"));
+		newEvent.setInsertingUserId(currentEventJson
+				.getString("insertingUserId"));
+		newEvent.setIsKaki(currentEventJson.getBoolean("isKaki"));
+		newEvent.setIsPipi(currentEventJson.getBoolean("isPipi"));
+
+		// temp is never used, we don't use the 'entry id'
+		int temp = dbManager.getInstance().insertNewEvent(newEvent);
+
+		// pulls events from last 24 for the kid
+		List<EventData> kidEvents = dbManager.getInstance().getEventsForKid(
+				newEvent.getKidId(), 1);
 		JSONObject outputList = new JSONObject();
+
+		// write back the answer to ido (atifa in json)
 		for (EventData eventData : kidEvents) {
 			outputList.put("dateTime", eventData.getDateTime());
-			outputList.put("insertingUserId",
-					eventData.getInsertingUserId());
+			outputList.put("insertingUserId", eventData.getInsertingUserId());
 			outputList.put("kidId", eventData.getKidId());
 			// *Note: meanwhile, no createdIndependenceStages are sent
-			//outputList.put("createdIndependenceStages",
-				//	eventData.getCreatedIndependenceStages());
+			// outputList.put("createdIndependenceStages",
+			// eventData.getCreatedIndependenceStages());
 			outputList.put("kidIsInitiator", eventData.isKidIsInitiator());
 			outputList.put("comments", eventData.getComments());
 			outputList.put("isKaki", eventData.getIsKaki());
 			outputList.put("isPipi", eventData.getIsPipi());
 		}
+
 		// the key is KID_EVENTS_LIST,
 		// and the value is the list of the events of the kid
 		writer.object();
 		writer.key(KID_EVENTS);
 		writer.value(outputList);
 		writer.endObject();
+
 	}
 
 	private String extractJsonFromRequest(HttpServletRequest request) {
