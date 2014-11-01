@@ -50,7 +50,7 @@ formValues["radio-wipe-hands"] = "fullHelp";
 function buildJSONObject() {
     var obj = {
         insertingUserId: UID,
-        kidId: KIDID,
+        kidId: QueryString.id,
         dateTime: "2004-02-01 00:00:00",
         createdIndependenceStages: [
             {independenceStage: "pantsUp", assistantLevel: formValues["radio-lift-pants"]},
@@ -64,6 +64,7 @@ function buildJSONObject() {
             {independenceStage: "handsDry", assistantLevel: formValues["radio-wipe-hands"]},
             {independenceStage: "pantsDown", assistantLevel: formValues["radio-drop-pants"]},
         ],
+        comments: document.getElementById("comment").value,
         kidIsInitiator: formValues["radio-kid-init"],
         isKaki: formValues["action-poo"],
         isPipi: formValues["action-pee"]
@@ -158,6 +159,11 @@ $(document).ready(function() {
     }
 
     $("#independentLine").click(function(){
+        if ($("#independentLine").hasClass("up")) {
+            $("#independentLine").removeClass("up").addClass("down");
+        } else {
+            $("#independentLine").removeClass("down").addClass("up");
+        }
       $("#bottom_table").slideToggle();
     });
 
