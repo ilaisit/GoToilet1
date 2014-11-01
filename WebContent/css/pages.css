@@ -36,16 +36,16 @@ HEADER .burger_btn {overflow: hidden; text-indent: -9999px; height:55%; width: 2
 
 TEXTAREA { width: 90%; height:5%; padding: 1%; margin: 2% 4% 1% 4%; font: normal 2.6vh Arial; color:#787879;}
 
-.bottom_table { width: 92%; margin: 0% 4% 0% 4%; height: 30%;  font: normal 2.3vh Arial}
+.bottom_table { width: 92%; margin: 0% 4% 0% 4%; height: 30%;  font: normal 2.3vh Arial; }
 .bottom_table TABLE { width: 100%; height: 100%;}
 .bottom_table TABLE TR { height: 18%;}
 .bottom_table TABLE TR TD { height: 18%;}
 .bottom_table TABLE TR TD DIV, .bottom_table TABLE TR TD SPAN { vertical-align: middle; font: normal 2.1vh Arial; color:#787879; background-position: 50% 50%;}
-.bottom_table TABLE TR TD:first-child SPAN { color:#749cd2 !important;  font: bold 2.3vh Arial}
-.up {background-repeat: no-repeat; background-position: 100% 50%; background-size: contain; -webkit-background-size: contain; background-image: url('../images/down_arrow.png'); }
-.down {background-repeat: no-repeat; background-position: 100% 50%; background-size: contain; -webkit-background-size: contain; background-image: url('../images/up_arrow.png'); }
-.end_btn { background-color: #749cd2; color:#ffffff; float: left; height: 5.5%; margin-left: 4%; margin-top: 3%; text-align: center; width: 12%; font: normal 3.5vh Arial;  border-radius: 20px; line-height: 5.5vh;}
-#independentLine { background-color: #8d8e8d; padding-right: 10%; font: bold 3vh Arial; color: #fff; line-height: 5.5vh; }
+.bottom_table TABLE TR TD:first-child SPAN { color:#749cd2 !important;  font: bold 2.3vh Arial; }
+.up { height: 70%; width: 8%; display: inline-block; background-repeat: no-repeat; background-position: 100% 50%; background-size: contain; -webkit-background-size: contain; background-image: url('../images/down_arrow.png'); vertical-align: middle; }
+.down { height: 70%; width: 8%; display: inline-block; background-repeat: no-repeat; background-position: 100% 50%; background-size: contain; -webkit-background-size: contain; background-image: url('../images/up_arrow.png'); vertical-align: middle;}
+.end_btn { background-color: #749cd2; color:#ffffff; float: left; height: 5.5%; margin-left: 4%; margin-top: 3%; text-align: center; width: 12%; font: normal 3.5vh Arial;  border-radius: 20px; line-height: 5.5vh; }
+#independentLine { background-color: #8d8e8d; padding-right: 4%; font: bold 3vh Arial; color: #fff; line-height: 5.5vh; height: 5.5%;}
             
 @media only screen and (orientation:portrait){
     #mainContent { display:none; }

@@ -102,7 +102,6 @@ $(document).ready(function() {
 
     function setRadios() {
         var allCB = document.getElementsByName("checkbox");
-        alert(allCB.length)
         for (var i = 0; i < allCB.length; i++) {
             var id = allCB[i].id;
             //$("#"+id).bind('mousedown touchstart', getRadioDownFunction(id));
@@ -159,15 +158,17 @@ $(document).ready(function() {
     }
 
     $("#independentLine").click(function(){
-        if ($("#independentLine").hasClass("up")) {
-            $("#independentLine").removeClass("up").addClass("down");
+        if ($("#arrow").hasClass("up")) {
+            $("#arrow").removeClass("up").addClass("down");
         } else {
-            $("#independentLine").removeClass("down").addClass("up");
+            $("#arrow").removeClass("down").addClass("up");
         }
       $("#bottom_table").slideToggle();
     });
 
     fixElementsApperance();
+     $("#bottom_table").hide();
+    
     setRadios();
     document.getElementById("childName").innerHTML = decodeURI(QueryString.name);
     document.getElementById("profilePicture").src = "images/" + QueryString.img;
@@ -179,11 +180,16 @@ $(document).ready(function() {
 function postToServer() {
     var data = buildJSONObject();
     $.ajax({
-        url: "http://192.168.30.166:8080/diaryServer/newLogin",
+        url: SERVER_URL + "/newEvent",
         method: 'POST',
         data: JSON.stringify(data),
         success: function(resData) {
-            document.getElementById("mainDiv").innerHTML = resData;
+            var data = JSON.parse(resData);
+            if (data.success == -1 || data.success == "-1") {
+                alert("Server Error");
+            } else {
+                window.location = SERVER_URL + "/child.html?id=" + QueryString.id + "&name=" + QueryString.name + "&img=" + QueryString.img;
+            }
         },
         error: function() {
             alert("server error");
