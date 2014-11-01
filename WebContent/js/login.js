@@ -49,9 +49,10 @@ $(document).ready(function() {
         alert(resData)
         var data = JSON.parse(resData);
         if (data.type == 0 || data.type == "0") {
-            
+             document.getElementById("errorLabel").style.display = "";
         } else {
-            
+            data.userId
+            document.cookie="username=John Doe";
         }
     }
     
