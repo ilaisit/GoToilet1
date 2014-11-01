@@ -49,7 +49,7 @@ function addChildrenToPage(resData) {
     for(var i = 0; i < allChildern.length; i++) {
         var newChildDiv = document.createElement("div");
         newChildDiv.className = "kid_header";
-        newChildDiv.onClick = getKidFunction(allChildern[i].kidId, allChildern[i].kidName, allChildern[i].imageLink);
+        newChildDiv.onclick = getKidFunction(allChildern[i].kidId, allChildern[i].kidName, allChildern[i].imageLink);
         var innerContant = kidTemplate.replace('[NAME_OF_CHILD]', allChildern[i].kidName);
         innerContant = innerContant.replace('[IMG_SRC]', SERVER_URL + '/images/' + allChildern[i].imageLink);
         newChildDiv.innerHTML = innerContant;
@@ -60,6 +60,8 @@ function addChildrenToPage(resData) {
         spacer.innerHTML = "&nbsp;";
         mainDiv.appendChild(spacer);
     }
+    
+    fixElementsApperance();
 }
 
 function getKidFunction(id,name,img) {
