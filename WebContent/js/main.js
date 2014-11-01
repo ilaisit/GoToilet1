@@ -49,7 +49,6 @@ function fixElementsApperance() {
 }
 
 function addChildrenToPage(resData) {
-    alert("add children \n" + resData);
     var data = JSON.parse(resData);
     var gardenName = data.name;
     document.getElementById("header").innerHTML = gardenName;

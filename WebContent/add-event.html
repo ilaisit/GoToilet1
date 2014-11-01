@@ -29,8 +29,8 @@ and open the template in the editor.
 
 
             <div  class="kid_header">
-                <div id="profilePicture" class="profile_picture v_align background_cover"></div>
-                <div class="profile_name v_align">גל לוי</div>
+                <img id="profilePicture" class="profile_picture v_align background_cover"/>
+                <div class="profile_name v_align" id="childName">גל לוי</div>
                 <div class="time_box v_align">
                     <div>תאריך: <span id="currentDate">01.09.14</span> <span class="edit">עריכה</span></div><br/>
                     <div>שעה: <span id="currentTime">12:34</span> <span class="edit">עריכה</span></div>
@@ -39,8 +39,8 @@ and open the template in the editor.
             <div class="big_line">
                 <span class="number">1. </span>
                 <span class="text">פעולה:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="radio_btn radio_on" name="radio-action" id="action-pee"></div><div class="pee"></div>
-                <div class="radio_btn radio_off" name="radio-action" id="action-poo"></div><div class="poo"></div>
+                <div class="checkbox_on" name="checkbox" id="action-pee" onclick="cbClick('pee');"></div><div class="pee"></div>
+                <div class="checkbox_off" name="checkbox" id="action-poo" onclick="cbClick('poo');"></div><div class="poo"></div>
             </div>
             
             <div class="big_line">
@@ -59,37 +59,38 @@ and open the template in the editor.
             </div>            
 
             <textarea >הערות, סימנים מקדימים...</textarea>
-            <table class="bottom_table">
+            <div id="independentLine">עצמאות</div>
+            <table class="bottom_table" id="bottom_table">
                 <tr>
                     <td>
                         <table cellspacing="5">
                             <tr>
                                 <td><span>פתיחת דלת</span></td>
-                                <td><div class="radio_btn_small radio_small_off" name="radio-open-door" id="open-door-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
+                                <td><div class="radio_btn_small radio_small_on" name="radio-open-door" id="open-door-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-open-door" id="open-door-2" value="partialHelp"></div><span class="text">עזרה חלקית</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-open-door" id="open-door-3" value="noHelp"></div><span class="text">עצמאי</span></td>
                             </tr>
                             <tr>
                                 <td><span>סגירת דלת</span></td>
-                                <td><div class="radio_btn_small radio_small_off" name="radio-close-door" id="close-door-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
+                                <td><div class="radio_btn_small radio_small_on" name="radio-close-door" id="close-door-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-close-door" id="close-door-2" value="partialHelp"></div><span class="text">עזרה חלקית</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-close-door" id="close-door-3" value="noHelp"></div><span class="text">עצמאי</span></td>
                             </tr>
                             <tr>
                                 <td><span>הורדת מכנסיים</span></td>
-                                <td><div class="radio_btn_small radio_small_off" name="radio-drop-pants" id="drop-pants-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
+                                <td><div class="radio_btn_small radio_small_on" name="radio-drop-pants" id="drop-pants-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-drop-pants" id="drop-pants-2" value="partialHelp"></div><span class="text">עזרה חלקית</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-drop-pants" id="drop-pants-3" value="noHelp"></div><span class="text">עצמאי</span></td>
                             </tr>
                             <tr>
                                 <td><span>הורדת תחתונים</span></td>
-                                <td><div class="radio_btn_small radio_small_off" name="radio-drop-underware" id="drop-underware-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
+                                <td><div class="radio_btn_small radio_small_on" name="radio-drop-underware" id="drop-underware-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-drop-underware" id="drop-underware-2" value="partialHelp"></div><span class="text">עזרה חלקית</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-drop-underware" id="drop-underware-3" value="noHelp"></div><span class="text">עצמאי</span></td>
                             </tr>
                             <tr>
                                 <td><span>ניגוב לבד</span></td>
-                                <td><div class="radio_btn_small radio_small_off" name="radio-wipe" id="radio-wipe-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
+                                <td><div class="radio_btn_small radio_small_on" name="radio-wipe" id="radio-wipe-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-wipe" id="radio-wipe-2" value="partialHelp"></div><span class="text">עזרה חלקית</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-wipe" id="radio-wipe-3" value="noHelp"></div><span class="text">עצמאי</span></td>
                             </tr>                            
@@ -102,31 +103,31 @@ and open the template in the editor.
                         <table>
                             <tr>
                                 <td><span>הרמת תחתונים</span></td>
-                                <td><div class="radio_btn_small radio_small_off" name="radio-lift-underware" id="lift-underware-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
+                                <td><div class="radio_btn_small radio_small_on" name="radio-lift-underware" id="lift-underware-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-lift-underware" id="lift-underware-2" value="partialHelp"></div><span class="text">עזרה חלקית</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-lift-underware" id="lift-underware-3" value="noHelp"></div><span class="text">עצמאי</span></td>
                             </tr>
                             <tr>
                                 <td><span>הרמת מכנסיים</span></td>
-                                <td><div class="radio_btn_small radio_small_off" name="radio-lift-pants" id="lift-pants-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
+                                <td><div class="radio_btn_small radio_small_on" name="radio-lift-pants" id="lift-pants-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-lift-pants" id="lift-pants-2" value="partialHelp"></div><span class="text">עזרה חלקית</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-lift-pants" id="lift-pants-3" value="noHelp"></div><span class="text">עצמאי</span></td>
                             </tr>
                             <tr>
                                 <td><span>הורדת המים</span></td>
-                                <td><div class="radio_btn_small radio_small_off" name="radio-flush" id="flush-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
+                                <td><div class="radio_btn_small radio_small_on" name="radio-flush" id="flush-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-flush" id="flush-2" value="partialHelp"></div><span class="text">עזרה חלקית</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-flush" id="flush-3" value="noHelp"></div><span class="text">עצמאי</span></td>
                             </tr>
                             <tr>
                                 <td><span>שטיפת ידיים</span></td>
-                                <td><div class="radio_btn_small radio_small_off" name="radio-wash-hands" id="wash-hands-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
+                                <td><div class="radio_btn_small radio_small_on" name="radio-wash-hands" id="wash-hands-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-wash-hands" id="wash-hands-2" value="partialHelp"></div><span class="text">עזרה חלקית</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-wash-hands" id="wash-hands-3" value="noHelp"></div><span class="text">עצמאי</span></td>
                             </tr>  
                             <tr>
                                 <td><span>נידוב ידיים</span></td>
-                                <td><div class="radio_btn_small radio_small_off" name="radio-wipe-hands" id="wipe-hands-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
+                                <td><div class="radio_btn_small radio_small_on" name="radio-wipe-hands" id="wipe-hands-1" value="fullHelp"></div><span class="text">עזרה מלאה</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-wipe-hands" id="wipe-hands-2" value="partialHelp"></div><span class="text">עזרה חלקית</span></td>
                                 <td><div class="radio_btn_small radio_small_off" name="radio-wipe-hands" id="wipe-hands-3" value="noHelp"></div><span class="text">עצמאי</span></td>
                             </tr>                                 

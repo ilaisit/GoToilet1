@@ -53,7 +53,6 @@ $(document).ready(function() {
     
 
     function onGetDataFromServer(resData) {
-        alert(resData);
         var data = JSON.parse(resData);
         if (data.type == 0 || data.type == "0") {
              document.getElementById("errorLabel").style.display = "";

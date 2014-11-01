@@ -34,7 +34,7 @@ HEADER .burger_btn {overflow: hidden; text-indent: -9999px; height:55%; width: 2
 .big_line .number { color:#749cd2; font-size: 4.1vh; }
 .big_line .text { color:#787879; font-size: 3.8vh; }
 
-TEXTAREA { width: 90%; heigh:8%; padding: 1%; margin: 2% 4% 1% 4%; font: normal 2.6vh Arial; color:#787879;}
+TEXTAREA { width: 90%; height:5%; padding: 1%; margin: 2% 4% 1% 4%; font: normal 2.6vh Arial; color:#787879;}
 
 .bottom_table { width: 92%; margin: 0% 4% 0% 4%; height: 30%;  font: normal 2.3vh Arial}
 .bottom_table TABLE { width: 100%; height: 100%;}
@@ -44,6 +44,7 @@ TEXTAREA { width: 90%; heigh:8%; padding: 1%; margin: 2% 4% 1% 4%; font: normal 
 .bottom_table TABLE TR TD:first-child SPAN { color:#749cd2 !important;  font: bold 2.3vh Arial}
 
 .end_btn { background-color: #749cd2; color:#ffffff; float: left; height: 5.5%; margin-left: 4%; margin-top: 3%; text-align: center; width: 12%; font: normal 3.5vh Arial;  border-radius: 20px; line-height: 5.5vh;}
+#independentLine { background-color: #8d8e8d; padding-right: 10%; font: bold 3vh Arial; color: #fff; line-height: 5.5vh; }
             
 @media only screen and (orientation:portrait){
     #mainContent { display:none; }

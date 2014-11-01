@@ -113,6 +113,12 @@ $(document).ready(function() {
     $(window).on('resize', fixElementsApperance);
 
     fixElementsApperance();
+    
+    document.getElementById("childName").innerHTML = QueryString.name;
+    document.getElementById("profilePicture").src = "images/" + QueryString.img;
+    document.getElementById("newEventLink").href = "add-event.html?id=" + id + "&name=" +  QueryString.name + "&img=" +  QueryString.image;
+    
+    
 });
 
 

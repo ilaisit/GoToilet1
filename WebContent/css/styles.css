@@ -45,6 +45,10 @@ abbr,acronym { border:0;
 .R { float:right; }
 .L { float:left; }
 .radio_btn { display: inline-block; height:100%; margin-right:2.5%; margin-left:2%; }
+
+.checkbox_on { display: inline-block; height:100%; margin-right:2.5%; margin-left:2%; background-repeat: no-repeat; background-size:contain; -webkit-background-size: contain; background-image: url("../images/cb_v.png");}
+.checkbox_off { display: inline-block; height:100%; margin-right:2.5%; margin-left:2%; background-repeat: no-repeat; background-size:cover; -webkit-background-size: cover; background-image: url("../images/cb.png"); }
+
 .radio_btn_small { display: inline-block; height:90%; margin-right:2.5%; margin-left:2%; }
 .radio_off { background-repeat: no-repeat; background-size:cover; -webkit-background-size: cover; background-image: url("../images/radio_off.png"); }
 .radio_hover {background-repeat: no-repeat; background-size:cover; -webkit-background-size: cover; background-image: url("../images/radio_hover.png"); }
