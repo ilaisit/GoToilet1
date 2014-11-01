@@ -49,7 +49,7 @@ formValues["radio-wipe-hands"] = "fullHelp";
 
 function buildJSONObject() {
     var obj = {
-        insertingUserId: UID,
+        insertingUserId: "1",
         kidID: QueryString.id,
         dateTime: "2004-02-01 00:00:00",
         createdIndependenceStages: [
