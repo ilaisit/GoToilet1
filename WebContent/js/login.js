@@ -60,10 +60,10 @@ $(document).ready(function() {
         } else {
             document.cookie="userid=" + data.userID;
             if (data.type == 1 || data.type == "1" ) {
-                window.location = "http://localhost:8080/diaryServer/main.html";
+                window.location = SERVER_URL + "/main.html";
             } else {
-                alert(data.data.arrayValues[0].kidId);
-                window.location = "http://localhost:8080/diaryServer/child.html?id=" + parentChild.kidId;
+                var id = data.data.arrayValues[0].kidId;
+                window.location = SERVER_URL + "/child.html?id=" + id;
             }
         }
     }
