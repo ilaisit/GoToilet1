@@ -7,6 +7,7 @@ var kidTemplate = '<img src="[IMG_SRC]" class="profile_picture v_align backgroun
         '<div class="profile_name v_align">[NAME_OF_CHILD]</div>';
 
 var UID = -1;
+var userType;
 
 function getCookie(cname) {
     var name = cname + "=";
@@ -55,21 +56,24 @@ function addChildrenToPage(resData) {
     var allChildern = data.data.arrayValues;
     var mainDiv = document.getElementById("mainContent");
 
-    for (var i = 0; i < allChildern.length; i++) {
-        var newChildDiv = document.createElement("div");
-        newChildDiv.className = "kid_header";
-        newChildDiv.onclick = getKidFunction(allChildern[i].kidId, allChildern[i].kidName, allChildern[i].imageLink);
-        var innerContant = kidTemplate.replace('[NAME_OF_CHILD]', allChildern[i].kidName);
-        innerContant = innerContant.replace('[IMG_SRC]', SERVER_URL + '/images/' + allChildern[i].imageLink);
-        newChildDiv.innerHTML = innerContant;
-        mainDiv.appendChild(newChildDiv);
+    if (userType == "2" || userType == 2) {
+         window.location = SERVER_URL + "/child.html?id=" + allChildern[0].kidId + "&name=" + allChildern[0].kidName + "&img=" + allChildern[0].imageLink;
+    } else {
+        for (var i = 0; i < allChildern.length; i++) {
+            var newChildDiv = document.createElement("div");
+            newChildDiv.className = "kid_header";
+            newChildDiv.onclick = getKidFunction(allChildern[i].kidId, allChildern[i].kidName, allChildern[i].imageLink);
+            var innerContant = kidTemplate.replace('[NAME_OF_CHILD]', allChildern[i].kidName);
+            innerContant = innerContant.replace('[IMG_SRC]', SERVER_URL + '/images/' + allChildern[i].imageLink);
+            newChildDiv.innerHTML = innerContant;
+            mainDiv.appendChild(newChildDiv);
 
-        var spacer = document.createElement("div");
-        spacer.className = "spacer";
-        spacer.innerHTML = "&nbsp;";
-        mainDiv.appendChild(spacer);
+            var spacer = document.createElement("div");
+            spacer.className = "spacer";
+            spacer.innerHTML = "&nbsp;";
+            mainDiv.appendChild(spacer);
+        }
     }
-
     fixElementsApperance();
     setTimeout("fixElementsApperance();", 2500);
 }
@@ -80,10 +84,12 @@ function getKidFunction(id, name, img) {
     };
 }
 
+userType = getCookie("type");
 UID = getCookie("userid");
 if (UID < 0 || UID == "" || !UID) {
     alert("ERROR no UID");
 } else {
+
     getChildren();
 
     $(document).ready(function() {

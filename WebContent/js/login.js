@@ -51,12 +51,14 @@ $(document).ready(function() {
         if (data.type == 0 || data.type == "0") {
              document.getElementById("errorLabel").style.display = "";
         } else {
-            document.cookie="userid=" + data.userID;
+            document.cookie="userid=" + data.userID + "&type=" + data.type;
             if (data.type == 1 || data.type == "1" ) {
                 window.location = SERVER_URL + "/main.html";
             } else {
                 var id = data.data.arrayValues[0].kidId;
-                window.location = SERVER_URL + "/child.html?id=" + id;
+                var name = data.data.arrayValues[0].kidName;
+                var image = data.data.arrayValues[0].imageLink;
+                window.location = SERVER_URL + "/child.html?id=" + id + "&name=" + name + "&img=" + image;
             }
         }
     }

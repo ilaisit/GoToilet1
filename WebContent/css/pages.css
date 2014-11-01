@@ -45,7 +45,7 @@ TEXTAREA { width: 90%; height:5%; padding: 1%; margin: 2% 4% 1% 4%; font: normal
 .up { height: 70%; width: 8%; display: inline-block; background-repeat: no-repeat; background-position: 100% 50%; background-size: contain; -webkit-background-size: contain; background-image: url('../images/down_arrow.png'); vertical-align: middle; }
 .down { height: 70%; width: 8%; display: inline-block; background-repeat: no-repeat; background-position: 100% 50%; background-size: contain; -webkit-background-size: contain; background-image: url('../images/up_arrow.png'); vertical-align: middle;}
 .end_btn { background-color: #749cd2; color:#ffffff; float: left; height: 5.5%; margin-left: 4%; margin-top: 3%; text-align: center; width: 12%; font: normal 3.5vh Arial;  border-radius: 20px; line-height: 5.5vh; }
-#independentLine { background-color: #8d8e8d; padding-right: 4%; font: bold 3vh Arial; color: #fff; line-height: 5.5vh; height: 5.5%;}
+.open_bar  { background-color: #8d8e8d; padding-right: 4%; font: bold 3vh Arial; color: #fff; line-height: 5.5vh; height: 5.5%;}
             
 @media only screen and (orientation:portrait){
     #mainContent { display:none; }
@@ -53,3 +53,5 @@ TEXTAREA { width: 90%; height:5%; padding: 1%; margin: 2% 4% 1% 4%; font: normal
 @media only screen and (orientation:landscape){
 
 }
+
+.mm-list li a{font-size: 5vh; line-height: 5hv; padding:5%; }
