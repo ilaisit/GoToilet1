@@ -63,13 +63,13 @@ function buildJSONObject() {
             {independenceStage: "wipe", assistantLevel: formValues["radio-wipe"]},
             {independenceStage: "flushWater", assistantLevel: formValues["radio-flush"]},
             {independenceStage: "handsDry", assistantLevel: formValues["radio-wipe-hands"]},
-            {independenceStage: "pantsDown", assistantLevel: formValues["radio-drop-pants"]},
+            {independenceStage: "pantsDown", assistantLevel: formValues["radio-drop-pants"]}
         ],
         comments: document.getElementById("comment").value,
         kidIsInitiator: formValues["radio-kid-init"],
-        isKaki: formValues["action-poo"],
-        isPipi: formValues["action-pee"]
-    }
+        isKaki: ""+formValues["action-poo"],
+        isPipi: ""+formValues["action-pee"]
+    };
     return obj;
 }
 
