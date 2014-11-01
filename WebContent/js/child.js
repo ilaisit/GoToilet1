@@ -113,9 +113,9 @@ $(document).ready(function() {
 
     fixElementsApperance();
     
-    document.getElementById("childName").innerHTML = QueryString.name;
+    document.getElementById("childName").innerHTML = decodeURI(QueryString.name);
     document.getElementById("profilePicture").src = "images/" + QueryString.img;
-    document.getElementById("newEventLink").href = "add-event.html?id=" + QueryString.id + "&name=" +  QueryString.name + "&img=" +  QueryString.image;
+    document.getElementById("newEventLink").href = "add-event.html?id=" + QueryString.id + "&name=" +  QueryString.name + "&img=" +  QueryString.img;
     
     
 });

@@ -31,12 +31,6 @@ var UID = 0;
 var KIDID = 0;
 
 
-var kidIsInitiator = false;
-var comments = "";
-
-var action = "action-pee";
-var status = "status-success";
-var kidInit = "kidInit-yes";
 var formValues = [];
 formValues["action-poo"] = false;
 formValues["action-pee"] = true;
@@ -169,7 +163,7 @@ $(document).ready(function() {
 
     fixElementsApperance();
     setRadios();
-    document.getElementById("childName").innerHTML = QueryString.name;
+    document.getElementById("childName").innerHTML = decodeURI(QueryString.name);
     document.getElementById("profilePicture").src = "images/" + QueryString.img;
 
 
