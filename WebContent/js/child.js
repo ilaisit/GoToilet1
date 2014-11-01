@@ -4,16 +4,14 @@
  * and open the template in the editor.
  */
 
-var rowTemplate = 
-                    <td>8:00</td> 
-                    <td class='details'>
-                        <div class='[INIT]'>הליכה יזומה</div>
-                        <div class='spacer'>&nbsp;</div>
-                        <div class='[MISS]'>פספוס</div>
-                    </td>
-                    <td class='sign'>&nbsp;-</td>
-                    <td class='sign'>&nbsp;-</td>
-                </tr>"
+var rowTemplate =   "<td>[DATE_TIME]</td>"+
+                    "<td class='details'>"+
+                        "<div class='[INIT]'>הליכה יזומה</div>"+
+                        "<div class='spacer'>&nbsp;</div>"+
+                        "<div class='[MISS]'>פספוס</div>"+
+                    "</td>"+
+                    "<td class='sign'>[PIPI]</td>"+
+                    "<td class='sign'>[KAKI]</td>";
 var QueryString = function() {
     // This function is anonymous, is executed immediately and 
     // the return value is assigned to QueryString!
