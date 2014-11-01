@@ -117,6 +117,7 @@ $(document).ready(function() {
     document.getElementById("childName").innerHTML = decodeURI(QueryString.name);
     document.getElementById("profilePicture").src = "images/" + QueryString.img;
     document.getElementById("newEventLink").href = "add-event.html?id=" + QueryString.id + "&name=" +  QueryString.name + "&img=" +  QueryString.img;
+    document.getElementById("statsLink").href = "stats.html?id=" + QueryString.id + "&name=" +  QueryString.name + "&img=" +  QueryString.img;
     
     
 });
