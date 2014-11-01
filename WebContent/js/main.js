@@ -30,7 +30,7 @@ function getChildren() {
         method: 'POST',
         data: JSON.stringify(data),
         success: function(resData) {
-            addChildrenToPage();
+            addChildrenToPage(resData);
         },
         error: function() {
             alert("server error");
@@ -47,10 +47,11 @@ function addChildrenToPage(resData) {
     var mainDiv = document.getElementById("mainContent");
     
     for(var i = 0; i < allChildern.length; i++) {
+        alert(allChildern[i] + "::"+allChildern[i].kidName);
         var newChildDiv = document.createElement("div");
         newChildDiv.className = "kid_header";
         newChildDiv.onClick = getKidFunction(allChildern[i].kidId);
-        var innerContant = kidTemplate.replace('[NAME_OF_CHILD]', allChildern[i].kidkidName);
+        var innerContant = kidTemplate.replace('[NAME_OF_CHILD]', allChildern[i].kidName);
         innerContant = innerContant.replace('[IMG_SRC]', SERVER_URL + '/images/' + allChildern[i].imageLink);
         newChildDiv.innerHTML = innerContant;
         mainDiv.appendChild(newChildDiv);
@@ -68,8 +69,7 @@ function getKidFunction(id) {
     };
 }
 
-//UID = getCookie("userid");
-UID = "4";
+UID = getCookie("userid");
 if (UID < 0 || UID == "" || !UID) {
     alert("ERROR no UID");
 } else {
