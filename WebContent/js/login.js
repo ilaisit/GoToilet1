@@ -23,6 +23,13 @@ $(document).ready(function() {
     fixElementsApperance();
     
     
+
+    
+
+    
+    
+    
+});
     function postToServer() {
         document.getElementById("loader").style.display = "";
         var data = {
@@ -44,7 +51,7 @@ $(document).ready(function() {
         });
     }
     
-    
+
     function onGetDataFromServer(resData) {
         alert(resData)
         var data = JSON.parse(resData);
@@ -55,7 +62,3 @@ $(document).ready(function() {
             document.cookie="username=John Doe";
         }
     }
-    
-    
-    
-});
