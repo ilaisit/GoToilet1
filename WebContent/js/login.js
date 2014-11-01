@@ -31,6 +31,7 @@ $(document).ready(function() {
 });
     function postToServer() {
         document.getElementById("loader").style.display = "";
+        document.getElementById("loader").style.fontSize = "3.3vh";
         var data = {
             name: $('#loginName').val(),
             pass: $('#loginPass').val()
@@ -44,7 +45,7 @@ $(document).ready(function() {
                 onGetDataFromServer(resData);
             },
             error: function() {
-                document.getElementById("loader").style.display = "none";
+                document.getElementById("loader").style.fontSize = "none";
                 alert("server error");
             }
         });

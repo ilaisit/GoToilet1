@@ -91,7 +91,6 @@ $(document).ready(function() {
 });
 
     function fixTables() {
-        $("#chart_div1").hide();
         $("#chart_div2").hide();
     }
 
