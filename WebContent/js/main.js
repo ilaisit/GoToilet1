@@ -62,6 +62,7 @@ function addChildrenToPage(resData) {
     }
     
     fixElementsApperance();
+    setTimeout("fixElementsApperance();", 2500);
 }
 
 function getKidFunction(id,name,img) {

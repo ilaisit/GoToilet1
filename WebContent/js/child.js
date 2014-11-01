@@ -64,27 +64,27 @@ function addChildInfo(resData) {
         var inner = rowTemplate;
         inner.replace("[DATE_TIME]",rows[i].dateTime);
         if (rows[i].isKaki){
-            inner.replace("[KAKI]","&nbsp;+");
+            inner = inner.replace("[KAKI]","&nbsp;+");
         } else {
-            inner.replace("[KAKI]","&nbsp;-");
+            inner = inner.replace("[KAKI]","&nbsp;-");
         }
         
         if (rows[i].isPipi) {
-            inner.replace("[PIPI]","&nbsp;+");
+            inner= inner.replace("[PIPI]","&nbsp;+");
         } else {
-            inner.replace("[PIPI]","&nbsp;+");
+            inner = inner.replace("[PIPI]","&nbsp;+");
         }
              
         if (rows[i].kidIsInitiator) {
-            inner.replace("[INIT]","cb_v");
+            inner = inner.replace("[INIT]","cb_v");
         } else {
-            inner.replace("[INIT]","cb");
+            inner = inner.replace("[INIT]","cb");
         }
    
         if (rows[i].successResult) {
-            inner.replace("[MISS]","cb_v");
+            inner = inner.replace("[MISS]","cb_v");
         } else {
-            inner.replace("[MISS]","cb");
+            inner = inner.replace("[MISS]","cb");
         }
         
         tr.innerHTML = inner;
