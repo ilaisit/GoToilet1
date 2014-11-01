@@ -56,8 +56,8 @@ $(document).ready(function() {
                 window.location = SERVER_URL + "/main.html";
             } else {
                 var id = data.data.arrayValues[0].kidId;
-                var name = data.data.arrayValues[0].kidName;
-                var image = data.data.arrayValues[0].imageLink;
+                var name = data.kidName;
+                var image = data.imageLink;
                 window.location = SERVER_URL + "/child.html?id=" + id + "&name=" + name + "&img=" + image;
             }
         }

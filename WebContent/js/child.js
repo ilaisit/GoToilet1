@@ -62,7 +62,7 @@ function addChildInfo(resData) {
     for (var i = 0; i < rows.length; i++) {
         var tr = document.createElement("tr");
         var inner = rowTemplate;
-        inner = inner.replace("[DATE_TIME]",rows[i].dateTime);
+        inner = inner.replace("[DATE_TIME]", rows[i].dateTime);
         if (rows[i].isKaki){
             inner = inner.replace("[KAKI]","&nbsp;+");
         } else {
