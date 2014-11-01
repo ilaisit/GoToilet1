@@ -37,7 +37,7 @@ $(document).ready(function() {
             pass: $('#loginPass').val()
         }
         $.ajax({
-            url: "http://localhost:8080/diaryServer/newLogin",
+            url: SERVER_URL + "/newLogin",
             method: 'POST',
             data: JSON.stringify(data),
             success: function(resData) {

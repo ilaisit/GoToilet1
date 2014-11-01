@@ -20,10 +20,10 @@ function getCookie(cname) {
 
 function getChildren() {
     var data = {
-        
+        userId: UID
     }
     $.ajax({
-        url: "http://192.168.30.166:8080/diaryServer/viewGarden",
+        url: SERVER_URL + "/viewGarden",
         method: 'POST',
         data: JSON.stringify(data),
         success: function(resData) {
@@ -43,7 +43,7 @@ function addChildrenToPage(resData) {
 }
 
 //UID = getCookie("userid");
-UID = 4;
+UID = "4";
 if (UID < 0 || UID == "" || !UID) {
     alert("ERROR no UID");
 } else {
