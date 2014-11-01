@@ -55,7 +55,6 @@ function getChildren() {
 getChildren();
 
 function addChildInfo(resData) {
-    alert(resData);
     var data = JSON.parse(resData);
     var rows = data.data.arrayValues;
     var mainTable = document.getElementById("mainTable");

@@ -58,6 +58,7 @@ $(document).ready(function() {
         } else {
             setCookie("userid", data.userID);
             setCookie("type", data.type);
+
             if (data.type == 1 || data.type == "1" ) {
                 window.location = SERVER_URL + "/main.html";
             } else {
