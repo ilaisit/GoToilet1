@@ -47,10 +47,9 @@ function addChildrenToPage(resData) {
     var mainDiv = document.getElementById("mainContent");
     
     for(var i = 0; i < allChildern.length; i++) {
-        alert(allChildern[i] + "::"+allChildern[i].kidName);
         var newChildDiv = document.createElement("div");
         newChildDiv.className = "kid_header";
-        newChildDiv.onClick = getKidFunction(allChildern[i].kidId);
+        newChildDiv.onClick = getKidFunction(allChildern[i].kidId, allChildern[i].kidName, allChildern[i].imageLink);
         var innerContant = kidTemplate.replace('[NAME_OF_CHILD]', allChildern[i].kidName);
         innerContant = innerContant.replace('[IMG_SRC]', SERVER_URL + '/images/' + allChildern[i].imageLink);
         newChildDiv.innerHTML = innerContant;
@@ -63,9 +62,9 @@ function addChildrenToPage(resData) {
     }
 }
 
-function getKidFunction(id) {
+function getKidFunction(id,name,img) {
     return function() {
-        window.location = SERVER_URL + "/child.html?id=" + id;
+        window.location = SERVER_URL + "/child.html?id=" + id +"&name=" + name + "&img=" + img;
     };
 }
 
@@ -73,7 +72,6 @@ UID = getCookie("userid");
 if (UID < 0 || UID == "" || !UID) {
     alert("ERROR no UID");
 } else {
-   alert("UID FOUND!!   UID=" + UID);
    getChildren();
     
     $(document).ready(function() {
