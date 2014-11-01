@@ -1,0 +1,140 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11/10/2014, 17:45:54
+    Author     : miki
+*/
+
+html, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    direction: rtl;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+    direction: rtl;
+}
+body {
+    line-height: 1;
+    direction: rtl;
+}
+ol, ul {
+    list-style: none;
+    direction: rtl;
+}
+.mainWrapper ol li, .mainWrapper ul li{
+    float:right;
+}
+
+blockquote, q {
+    quotes: none;
+    direction: rtl;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+    direction: rtl;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    direction: ltr;
+    /* align-content: center; */
+    /* align-self: center; */
+    /* vertical-align: middle; */
+}
+
+body { background-color: #EEE; direction: rtl;} 
+
+.navbar-brand {
+    float: right;
+}
+.navbar-toggle{
+    float: left;
+}
+
+.mainWrapper .clear {
+    clear:both;
+}
+.mainWrapper .page_header {
+    padding-right: 42px;
+    float: right;
+}
+
+.mainWrapper .R { float: right;}
+.mainWrapper .L { /* float: left; */}
+
+.mainWrapper .MedimTextP {
+    text-align: center;
+    font-size: xx-large; 
+    vertical-align: central;
+}
+
+.mainWrapper .secondLevelHeader {
+    padding:10px;
+    font-size: x-large; 
+}
+
+.mainWrapper .thirdLevelHeader {
+    padding:10px;
+    font-size: medium; 
+}
+
+.mainWrapper .MediumTextTable {
+    text-align: center;
+    font-size: xx-large; 
+    vertical-align: central;
+    alignment-adjust: central;
+}
+
+.mainWrapper .MediumTextTableTD {
+    padding:15px;
+}
+
+.btn-default:not(.btn-link), .btn:not(.btn-link) {
+    background-color: #f5a23b;
+    font-size: 26px;
+    //font-size: 3vw;
+}
+
+.form-control {
+    font-size: 18px;
+    //font-size: 1.5vw;
+}
+
+.mainWrapper .myLabel {
+    margin-right: 42px;
+    font-size: 30px;
+}
+
+.panel-heading a:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";    
+    float: left; 
+    color: grey; 
+}
+.panel-heading a.collapsed:after {
+    content: "\e080";
+}
+
+.mainWrapper .footer {
+    background-color: #4285F4;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    padding: 5px;
+    color: #E1EBFD;
+}
+
+.mainWrapper .formMain {
+    padding-right: 20px;
+}
