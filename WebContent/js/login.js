@@ -4,7 +4,12 @@
  * and open the template in the editor.
  */
 
-
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
    
 $(document).ready(function() {
     document.body.style = "height: " + $(document).height();
@@ -51,7 +56,8 @@ $(document).ready(function() {
         if (data.type == 0 || data.type == "0") {
              document.getElementById("errorLabel").style.display = "";
         } else {
-            document.cookie="userid=" + data.userID + "&type=" + data.type;
+            setCookie("userid", data.userID);
+            setCookie("type", data.type);
             if (data.type == 1 || data.type == "1" ) {
                 window.location = SERVER_URL + "/main.html";
             } else {
