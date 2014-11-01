@@ -23,13 +23,6 @@ $(document).ready(function() {
     
     fixElementsApperance();
     
-    
-
-    
-
-    
-    
-    
 });
     function postToServer() {
         document.getElementById("loader").style.display = "";

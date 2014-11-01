@@ -17,24 +17,31 @@ and open the template in the editor.
         <script src="js/libs/jquery/jquery.js"></script>
         <script src="js/libs/jquery/jquery.mmenu.min.js" type="text/javascript"></script>
         <script src="js/SERVER.js" type="text/javascript"></script>
-        <script src="js/child.js" type="text/javascript"></script>
+        <script src="js/stats.js" type="text/javascript"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+          google.load("visualization", "1", {packages:["corechart"]});
+          google.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['הצלחות', 'ימים'],
+              ['2013',  1000],
+              ['2014',  1170],
+              ['2015',  660],
+              ['2016',  1030]
+            ]);
 
-        <style>
-            .main_table {width: 100%; }
-            .main_table { border-bottom: 2px solid #8d8e8d;}
-            .main_table .table_head TD { background-color: #8d8e8d; color: #fff; font: normal 3.5vh Arial; line-height: 6vh;  }
-            .main_table TD {padding-top: 0.5%; padding-bottom: 0.5%; padding-right: 4%; font: normal 2.9vh Arial; line-height: 6vh; }
-            .main_table TD.details {font: normal 2.8vh Arial;}
-            .main_table TD.details DIV { padding-right: 12%;  background-repeat: no-repeat; background-position: 100% 50%; background-size: contain; -webkit-background-size: contain;}
-            .main_table TD.details DIV.spacer {line-height: 1vh;}
-            .main_table TD.details DIV.cb { background-image: url('images/cb.png');}
-            .main_table TD.details DIV.cb_v { background-image: url('images/cb_v.png'); }
-            .main_table TD.sign { font-size: 5vh }
-            .big_line A, .big_line A:visited, .big_line A:active { color: #565757; width: 23%; background-repeat: no-repeat; background-position: 100% 50%; display: inline-block; font: normal 4vh Arial; padding-right: 5%; background-size: contain; -webkit-background-size: contain;}
-            .big_line A.new_event { background-image: url('images/plus.png'); }
-            .big_line A.stats { background-image: url('images/stats.png'); }
-            .big_line A.history { background-image: url('images/history.png'); }
-        </style>
+            var options = {
+              title: 'הצלחות',
+              hAxis: {title: 'הצלחות',  titleTextStyle: {color: '#333'}},
+              vAxis: {title: 'ימים',  titleTextStyle: {color: '#333'}, minValue: 0}
+            };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+          }
+        </script>
+
     </head>
 
     <body>
@@ -52,32 +59,11 @@ and open the template in the editor.
                     <div>תאריך תחילת מעקב: <span id="currentDate">01.09.14</span></div><br/>
                 </div>
             </div>
-            <div class="big_line">
-                <a id="newEventLink" href='ad-event.html' class='new_event'>דיווח חדש</a>
-                <a href='' class='stats'>סטטיסטיקה</a>
-                <a href='' class='history'>תצוגה שבועית</a>    
-            </div>
             
             <br/>
             
-            <table class="main_table" id='mainTable'>
-                <tr class="table_head">
-                    <td>שעה</td> 
-                    <td>פירוט</td>
-                    <td>פיפי</td>
-                    <td>קקי</td>
-                </tr>
-                <tr>
-                    <td>08:00 02-11-2014</td> 
-                    <td class='details'>
-                        <div class='cb_v'>הליכה יזומה</div>
-                        <div class='spacer'>&nbsp;</div>
-                        <div class='cb'>פספוס</div>
-                    </td>
-                    <td class='sign'>&nbsp;+</td>
-                    <td class='sign'>&nbsp;-</td>
-                </tr>
-            </table>
+            <div id="independentLine" ><div id="arrow" class="down"></div>הצלחות</div>
+            <div id="chart_div" style="width: 900px; height: 500px;"></div>
         </div>
 
 

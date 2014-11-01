@@ -4,14 +4,7 @@
  * and open the template in the editor.
  */
 
-var rowTemplate =   "<td>[DATE_TIME]</td>"+
-                    "<td class='details'>"+
-                        "<div class='[INIT]'>הליכה יזומה</div>"+
-                        "<div class='spacer'>&nbsp;</div>"+
-                        "<div class='[MISS]'>פספוס</div>"+
-                    "</td>"+
-                    "<td class='sign'>[PIPI]</td>"+
-                    "<td class='sign'>[KAKI]</td>";
+
 var QueryString = function() {
     // This function is anonymous, is executed immediately and 
     // the return value is assigned to QueryString!
@@ -54,47 +47,6 @@ function getChildren() {
 
 getChildren();
 
-function addChildInfo(resData) {
-    alert(resData);
-    var data = JSON.parse(resData);
-    var rows = data.data.arrayValues;
-    var mainTable = document.getElementById("mainTable");
-    for (var i = 0; i < rows.length; i++) {
-        var tr = document.createElement("tr");
-        var inner = rowTemplate;
-        inner = inner.replace("[DATE_TIME]",rows[i].dateTime);
-        if (rows[i].isKaki){
-            inner = inner.replace("[KAKI]","&nbsp;+");
-        } else {
-            inner = inner.replace("[KAKI]","&nbsp;-");
-        }
-        
-        if (rows[i].isPipi) {
-            inner= inner.replace("[PIPI]","&nbsp;+");
-        } else {
-            inner = inner.replace("[PIPI]","&nbsp;+");
-        }
-             
-        if (rows[i].kidIsInitiator) {
-            inner = inner.replace("[INIT]","cb_v");
-        } else {
-            inner = inner.replace("[INIT]","cb");
-        }
-   
-        if (rows[i].successResult) {
-            inner = inner.replace("[MISS]","cb_v");
-        } else {
-            inner = inner.replace("[MISS]","cb");
-        }
-        
-        tr.innerHTML = inner;
-        mainTable.appendChild(tr);
-    }
-    
-    
-    fixElementsApperance();
-}
-
 function fixElementsApperance() {
     $(".profile_picture").width($(".profile_picture").height());
     $(".burger_btn").width($(".burger_btn").height() * 1.91);
@@ -117,8 +69,15 @@ $(document).ready(function() {
     
     document.getElementById("childName").innerHTML = decodeURI(QueryString.name);
     document.getElementById("profilePicture").src = "images/" + QueryString.img;
-    document.getElementById("newEventLink").href = "add-event.html?id=" + QueryString.id + "&name=" +  QueryString.name + "&img=" +  QueryString.img;
-    document.getElementById("statsLink").href = "stats.html?id=" + QueryString.id + "&name=" +  QueryString.name + "&img=" +  QueryString.img;
+
+    $("#independentLine").click(function(){
+        if ($("#arrow").hasClass("up")) {
+            $("#arrow").removeClass("up").addClass("down");
+        } else {
+            $("#arrow").removeClass("down").addClass("up");
+        }
+      $("#chart_div").slideToggle();
+    });
     
     
 });
