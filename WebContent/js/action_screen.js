@@ -52,6 +52,7 @@ function buildJSONObject() {
         insertingUserId: "1",
         kidID: QueryString.id,
         dateTime: "2004-02-01 00:00:00",
+        successResult: ""+formValues["radio-status"],
         createdIndependenceStages: [
             {independenceStage: "pantsUp", assistantLevel: formValues["radio-lift-pants"]},
             {independenceStage: "pantiesDown", assistantLevel: formValues["radio-drop-underware"]},
