@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link href="css/jquery.mmenu.css" type="text/css" rel="stylesheet" />
+
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <style>
+
+            HTML, BODY { width: 100%; height: 100%; margin:0; padding:0; background-color: #fff; font-size: 100%; 
+                         //background-image:url("images/izy-shapira3-1.png"); background-repeat: no-repeat;
+                         direction: rtl; background-size:cover; -webkit-background-size: cover; font-family: Arial;}
+            .main_content { height: 100%; width: 100%;}
+            HEADER { height:7%;  width: 100%;  position: relative}
+            HEADER H1 { font: normal 5vh Arial; color: #565757; margin-right: 4%;}
+            HEADER .burger_btn {overflow: hidden; text-indent: -9999px; height:55%; width: 2.5%; background-image: url("images/burger.png");
+                                position: absolute; left:3%; top: 50%;}
+
+
+            .kid_header { height:13%; background-color: #749cd2; position: relative; color:#fff; }
+            .kid_header .profile_picture { background-image: url("images/Success-Kid.jpg"); background-position: 50% 50%; 
+                                           border-radius: 50%;  border: 1px solid #ffff71; -webkit-border-radius: 50%; -moz-border-radius: 50%;
+                                           width: 100px; height: 90%; margin-right: 4%;  top:50%; position: absolute;}
+            .kid_header .profile_name { color:#fff; font: normal 8vh Arial; position: absolute; top:50%;}
+            .kid_header .time_box { font-size: 3vh; position: absolute; top: 50%; left: 4%; text-align: left; line-height: 2vh;}
+            .kid_header .time_box .edit { color: #201b12; font-size: 2.7vh; text-decoration: underline;}
+
+            .big_line { height:4.5%; width: 100%; margin-right: 4%; margin-top: 2%;}
+            .big_line SPAN { vertical-align: bottom; }
+            .big_line .number { color:#749cd2; font-size: 4.1vh; }
+            .big_line .text { color:#787879; font-size: 3.8vh; }
+            
+            TEXTAREA { width: 90%; heigh:8%; padding: 1%; margin: 2% 4% 1% 4%; font: normal 2.6vh Arial; color:#787879;}
+            
+            .bottom_table { width: 92%; margin: 0% 4% 0% 4%; height: 30%;  font: normal 2.3vh Arial}
+            .bottom_table TABLE { width: 100%; height: 100%;}
+            .bottom_table TABLE TR { height: 18%;}
+            .bottom_table TABLE TR TD { height: 18%;}
+            .bottom_table TABLE TR TD DIV, .bottom_table TABLE TR TD SPAN { vertical-align: middle; font: normal 2.1vh Arial; color:#787879; background-position: 50% 50%;}
+            .bottom_table TABLE TR TD:first-child SPAN { color:#749cd2 !important;  font: bold 2.3vh Arial}
+             
+            
+                @media only screen and (orientation:portrait){
+                    #mainContent { display:none; }
+                }
+                @media only screen and (orientation:landscape){
+                    
+                }
+            
+        </style>
+
+        <script src="js/libs/jquery/jquery.js"></script>
+        <script src="js/libs/jquery/jquery.mmenu.min.js" type="text/javascript"></script>
+        <script src="js/action_screen.js" type="text/javascript"></script>
+
+    </head>
+    <body>
+        <div id="mainContent" class="main_content">
+            <header>
+                <h1 class="v_align">דיווח חדש</h1>
+                <a href="#my-menu" class="burger_btn background_cover">Open the menu</a>
+            </header>
+
+
+            <div  class="kid_header">
+                <div id="profilePicture" class="profile_picture v_align background_cover"></div>
+                <div class="profile_name v_align">גל לוי</div>
+                <div class="time_box v_align">
+                    <div>תאריך: <span id="currentDate">01.09.14</span> <span class="edit">עריכה</span></div><br/>
+                    <div>שעה: <span id="currentTime">12:34</span> <span class="edit">עריכה</span></div>
+                </div>
+            </div>
+            <div class="big_line">
+                <span class="number">1. </span>
+                <span class="text">פעולה:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="radio_btn radio_on" name="radio-action" id="action-pee"></div>
+                <div class="radio_btn radio_off" name="radio-action" id="action-poo"></div>
+            </div>
+            
+            <table class="bottom_table">
+                <tr class="table_head">
+                    <td></td> 
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    
+                </tr>
+                <td></td>
+                </th>
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <nav id="my-menu">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About us</a></li>
+                <li><a href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+        <script>
+
+        </script>
+    </body>
+</html>

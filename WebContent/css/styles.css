@@ -1,0 +1,54 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 21, 2014, 10:42:23 PM
+    Author     : Ido
+*/
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
+ margin:0;
+ padding:0;
+}
+table {
+ border-collapse:collapse;
+ border-spacing:50px;
+}
+fieldset,img { 
+ border:0;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+ font-style:normal;
+ font-weight:normal;
+}
+ol,ul {
+ list-style:none;
+}
+caption,th {
+ text-align:left;
+}
+h1,h2,h3,h4,h5,h6 {
+ font-size:100%;
+ font-weight:normal;
+}
+q:before,q:after {
+ content:'';
+}
+abbr,acronym { border:0;
+}
+
+
+.background_cover { background-repeat: no-repeat; background-size:cover; -webkit-background-size: cover;}
+.v_align {display: inline-block; vertical-align: middle;}
+.R { float:right; }
+.L { float:left; }
+.radio_btn { display: inline-block; height:100%; margin-right:2.5%; margin-left:2%; }
+.radio_btn_small { display: inline-block; height:90%; margin-right:2.5%; margin-left:2%; }
+.radio_off { background-repeat: no-repeat; background-size:cover; -webkit-background-size: cover; background-image: url("../images/radio_off.png"); }
+.radio_hover {background-repeat: no-repeat; background-size:cover; -webkit-background-size: cover; background-image: url("../images/radio_hover.png"); }
+.radio_on {background-repeat: no-repeat; background-size:cover; -webkit-background-size: cover; background-image: url("../images/radio_on.png"); }
+
+.radio_small_on { background-size:cover; -webkit-background-size: cover; height:90%; background-repeat: no-repeat; background-image: url("../images/radio_small_on.png"); }
+.radio_small_off { background-size:cover; -webkit-background-size: cover; height:90%; background-repeat: no-repeat; background-image: url("../images/radio_small_off.png"); }
