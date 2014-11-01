@@ -55,7 +55,6 @@ function getChildren() {
 getChildren();
 
 function addChildInfo(resData) {
-    alert("add child info \n" + resData);
     var data = JSON.parse(resData);
     var rows = data.data.arrayValues;
     var mainTable = document.getElementById("mainTable");
@@ -116,7 +115,7 @@ $(document).ready(function() {
     
     document.getElementById("childName").innerHTML = QueryString.name;
     document.getElementById("profilePicture").src = "images/" + QueryString.img;
-    document.getElementById("newEventLink").href = "add-event.html?id=" + id + "&name=" +  QueryString.name + "&img=" +  QueryString.image;
+    document.getElementById("newEventLink").href = "add-event.html?id=" + QueryString.id + "&name=" +  QueryString.name + "&img=" +  QueryString.image;
     
     
 });
