@@ -32,10 +32,10 @@ var KIDID = 0;
 
 
 var formValues = [];
-formValues["action-poo"] = false;
-formValues["action-pee"] = true;
-formValues["radio-status"] = 0;
-formValues["radio-kid-init"] = 0;
+formValues["action-poo"] = "false";
+formValues["action-pee"] = "true";
+formValues["radio-status"] = "0";
+formValues["radio-kid-init"] = "false";
 formValues["radio-open-door"] = "fullHelp";
 formValues["radio-close-door"] = "fullHelp";
 formValues["radio-drop-pants"] = "fullHelp";
