@@ -69,7 +69,6 @@ function buildJSONObject() {
         isKaki: formValues["action-poo"],
         isPipi: formValues["action-pee"]
     }
-    alert(JSON.stringify(obj));
     return obj;
 }
 
