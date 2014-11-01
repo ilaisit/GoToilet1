@@ -27,7 +27,7 @@ function getChildren() {
         method: 'POST',
         data: JSON.stringify(data),
         success: function(resData) {
-            addChildrenToPage()
+            addChildrenToPage();
         },
         error: function() {
             alert("server error");
@@ -36,18 +36,19 @@ function getChildren() {
 }
 
 function addChildrenToPage(resData) {
+    alert("add children \n" + resData);
     var data = JSON.parse(resData);
     var gardenName = data.name;
-    var allChildern = JSON.parse(data.data);
+    var allChildern = data.data.arrayValues;
     
 }
 
-//UID = getCookie("userid");
-UID = "4";
+UID = getCookie("userid");
+//UID = "4";
 if (UID < 0 || UID == "" || !UID) {
     alert("ERROR no UID");
 } else {
-   alert("UID FOUND!!   UID=" + UID)
+   alert("UID FOUND!!   UID=" + UID);
    getChildren();
     
     $(document).ready(function() {

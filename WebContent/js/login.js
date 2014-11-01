@@ -58,13 +58,11 @@ $(document).ready(function() {
         if (data.type == 0 || data.type == "0") {
              document.getElementById("errorLabel").style.display = "";
         } else {
-            document.cookie="userid=" + data.userId;
+            document.cookie="userid=" + data.userID;
             if (data.type == 1 || data.type == "1" ) {
                 window.location = "http://localhost:8080/diaryServer/main.html";
             } else {
-                alert("data.data  " + data.data)
-                var children = JSON.parse(data.data);
-                var parentChild = JSON.parse(children.arrayValues[0]);
+                alert(data.data.arrayValues[0].kidId);
                 window.location = "http://localhost:8080/diaryServer/child.html?id=" + parentChild.kidId;
             }
         }
