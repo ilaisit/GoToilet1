@@ -53,12 +53,19 @@ $(document).ready(function() {
     
 
     function onGetDataFromServer(resData) {
-        alert(resData)
+        alert(resData);
         var data = JSON.parse(resData);
         if (data.type == 0 || data.type == "0") {
              document.getElementById("errorLabel").style.display = "";
         } else {
-            data.userId
-            document.cookie="username=John Doe";
+            document.cookie="userid=" + data.userId;
+            if (data.type == 1 || data.type == "1" ) {
+                window.location = "http://localhost:8080/diaryServer/main.html";
+            } else {
+                alert("data.data  " + data.data)
+                var children = JSON.parse(data.data);
+                var parentChild = JSON.parse(children.arrayValues[0]);
+                window.location = "http://localhost:8080/diaryServer/child.html?id=" + parentChild.kidId;
+            }
         }
     }
