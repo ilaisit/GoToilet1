@@ -18,26 +18,43 @@ $(document).ready(function() {
         $(".burger_btn").css("margin-top", "-" + ($(".burger_btn").height() / 2) + "px");
         $(".login_box").css("margin-top", "-" + ($(".login_box").height() / 1.5) + "px");
         $(".login_box").css("margin-right", "-" + ($(".login_box").width() / 2) + "px");
-        
-        
-        
     }
     
     fixElementsApperance();
     
     
     function postToServer() {
-        var data = buildJSONObject();
+        document.getElementById("loader").style.display = "";
+        var data = {
+            name: $('#loginName').val(),
+            pass: $('#loginPass').val()
+        }
         $.ajax({
-            url: "http://192.168.30.166:8080/diaryServer/newLogin",
+            url: "http://localhost:8080/diaryServer/newLogin",
             method: 'POST',
             data: JSON.stringify(data),
             success: function(resData) {
-                document.getElementById("mainDiv").innerHTML = resData;
+                document.getElementById("loader").style.display = "none";
+                onGetDataFromServer(resData);
             },
             error: function() {
+                document.getElementById("loader").style.display = "none";
                 alert("server error");
             }
         });
     }
+    
+    
+    function onGetDataFromServer(resData) {
+        alert(resData)
+        var data = JSON.parse(resData);
+        if (data.type == 0 || data.type == "0") {
+            
+        } else {
+            
+        }
+    }
+    
+    
+    
 });
