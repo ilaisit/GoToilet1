@@ -91,10 +91,7 @@ if (UID < 0 || UID == "" || !UID) {
         document.body.style = "height: " + $(document).height();
         +"px";
         $(window).on('resize', fixElementsApperance);
-
-
-
-
+        $(window).on("orientationchange", fixElementsApperance);
 
         fixElementsApperance();
 

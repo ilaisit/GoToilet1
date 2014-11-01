@@ -78,6 +78,7 @@ $(document).ready(function() {
     document.body.style = "height: " + $(document).height();
     +"px";
     $(window).on('resize', fixElementsApperance);
+    $(window).on("orientationchange", fixElementsApperance);
 
 
 
