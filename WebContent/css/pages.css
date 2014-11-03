@@ -55,3 +55,7 @@ TEXTAREA { width: 90%; height:5%; padding: 1%; margin: 2% 4% 1% 4%; font: normal
 }
 
 .mm-list li a{font-size: 5vh; line-height: 5hv; padding:5%; }
+.MediumTextTable { padding:15px; direction: rtl;}
+.MediumTextTableTD { padding:15px;direction: rtl;}
+.thirdLevelHeader {     padding:10px;    font-size: medium;  }	
+.secondLevelHeader {     padding:10px; font-size: x-large; }

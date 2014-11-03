@@ -7,72 +7,66 @@ and open the template in the editor.
 <html>
     <head>        
         <meta charset="UTF-8">
-        <title>טיפים</title>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" >
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-        <link href="css/material-wfont.min.css" rel="stylesheet">        
-        <script src="js/ripples.min.js"></script>
-        <script src="js/material.min.js"></script>
-        <link href="css/about.css" rel="stylesheet">
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>אודות</title>
+        <link href="css/jquery.mmenu.css" type="text/css" rel="stylesheet" />
+
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <link rel="stylesheet" type="text/css" href="css/pages.css">
+
+        <script src="js/libs/jquery/jquery.js"></script>
+        <script src="js/libs/jquery/jquery.mmenu.min.js" type="text/javascript"></script>
+        <script src="js/SERVER.js" type="text/javascript"></script>
+        <script src="js/main.js" type="text/javascript"></script>
+        <style>
+            .spacer { height: 4%;}
+        </style>
     </head>
     <body class="mainWrapper">
-        <div class="bs-component">
-            <div class="navbar navbar-default">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="navbar-collapse collapse navbar-responsive-collapse">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li><a href="javascript:void(0)" class=" withripple">התנתק<div class="ripple-wrapper"></div></a></li>
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="javascript:void(0)" class=" withripple">בית<div class="ripple-wrapper"></div></a></li>
-                        <li class="active"><a href="about.html" class=" withripple">אודות<div class="ripple-wrapper"></div></a></li>
-                        <li><a href="tips.html" class=" withripple">טיפים<div class="ripple-wrapper"></div></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <p class="secondLevelHeader">
-            <a href="http://www.beitissie.org.il/">בית איזי שפירא</a>
-            פועל לשינוי באיכות חייהם של אנשים עם מוגבלויות ובני משפחותים
-            <br /><br/>
-            רוצים לדעת עוד על תהליך הגמילה מחיתולים? מוזמנים לראות את החוברת של בית איזי שפירא
-            <a href="http://www.beitissie.org.il/digital/diapers">לחץ כאן!</a>
-            <br /><br />
-            האפליקציה פותחה במסגרת תחרות קומיוניטי על ידי
-            <br />
-        </p>
-    <center><table class="MediumTextTable">
+        <div id="mainContent" class="main_content">
+            <header>
+                <a href="#my-menu" class="burger_btn background_cover">Open the menu</a>
+            </header>
+   	        <div class=kid_header>אודות</div>
+	        <p class="MediumTextTable">
+	            <a href="http://www.beitissie.org.il/">בית איזי שפירא</a>
+	            פועל לשינוי באיכות חייהם של אנשים עם מוגבלויות ובני משפחותים
+	            <br /><br/>
+	            רוצים לדעת עוד על תהליך הגמילה מחיתולים? מוזמנים לראות את החוברת של בית איזי שפירא
+	            <a href="http://www.beitissie.org.il/digital/diapers">לחץ כאן!</a>
+	            <br /><br />
+	            האפליקציה פותחה במסגרת תחרות קומיוניטי על ידי
+	            <br />
+	        </p>
+	    <table class="MediumTextTable">
             <tr>
                 <td class="MediumTextTableTD"><a href="il.linkedin.com/pub/ido-orlovski/63/a71/922">Ido Orlov</a></td>
                 <td class="MediumTextTableTD"><a href="il.linkedin.com/in/ozradiano/">Oz Radiano</a></td>
                 <td class="MediumTextTableTD"><a href="http://il.linkedin.com/pub/ilai-soloducho/68/56/414">Ilai Soloducho</a></td>
             </tr>
             <tr>
-                <td class="MediumTextTableTD"><img src="Assests/ido.png" alt="Ido Orlov"/></td>
-                <td class="MediumTextTableTD"><img src="Assests/oz.png" alt="Oz Radiano"/></td>
-                <td class="MediumTextTableTD"><img src="Assests/ilai.png" alt="Ilai Soloducho"/></td>
+                <td class="MediumTextTableTD"><img src="images/ido.png" alt="Ido Orlov"/></td>
+                <td class="MediumTextTableTD"><img src="images/oz.png" alt="Oz Radiano"/></td>
+                <td class="MediumTextTableTD"><img src="images/ilai.png" alt="Ilai Soloducho"/></td>
             </tr>
-        </table></center>    
-    <p class="secondLevelHeader">
-        עיצוב: יונית סולודוצ׳ו
-        <br /><br/>
-        ליווי מקצועי מטעם איזי שפירא: יעל אלשטיין, נועה ניצן
-        <br /><br/>
-        צרו קשר (איזי שפירא): 09-7701222
-        <br /><br/>
-        מנטור: יגאל דביר
-        <br />
-    </p>
+        </table>
+	    <p class="MediumTextTable">
+	        עיצוב: יונית סולודוצ׳ו
+	        <br /><br/>
+	        ליווי מקצועי מטעם איזי שפירא: יעל אלשטיין, נועה ניצן, רחלי בלום, אסטל סלבין
+	        <br /><br/>
+	        צרו קשר (איזי שפירא): 09-7701222
+	        <br /><br/>
+	        מנטור: יגאל דביר
+	        <br />
+	    </p>
+	    <nav id="my-menu">
+		    <ul>
+		        <li><a href="main.html">בית</a></li>
+		        <li><a href="about.html">אודות</a></li>
+		        <li><a href="tips.html">טיפים</a></li>
+		        <li><a href="login.html">התנתקות</a></li>
+		    </ul>
+		</nav>
+	</div>
 </body>
 </html>
