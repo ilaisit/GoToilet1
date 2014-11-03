@@ -1,5 +1,4 @@
 package diaryServer;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +11,14 @@ public class EventData {
 	private boolean kidIsInitiator;
 	private String comments;
 	private boolean isKaki, isPipi;
+	private String successResult;
 
 	public EventData() {
 		createdIndependenceStages = new ArrayList<IndependenceStages>();
 	}
 
 	public EventData(String dateTime, String insertingUserId, String kidId, List<IndependenceStages> createdIndependenceStages, boolean kidIsInitiator,
-			String comments, boolean isKaki, boolean isPipi) {
+			String comments, boolean isKaki, boolean isPipi, String successResult) {
 		this.dateTime = dateTime;
 		this.insertingUserId = insertingUserId;
 		this.kidId = kidId;
@@ -27,6 +27,7 @@ public class EventData {
 		this.comments = comments;
 		this.isKaki = isKaki;
 		this.isPipi = isPipi;
+		this.setSuccessResult(successResult);
 	}
 
 	@Override
@@ -111,5 +112,13 @@ public class EventData {
 		}
 
 		return retVal.toString();
+	}
+
+	public String getSuccessResult() {
+		return successResult;
+	}
+
+	public void setSuccessResult(String successResult) {
+		this.successResult = successResult;
 	}
 }

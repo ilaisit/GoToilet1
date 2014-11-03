@@ -2,9 +2,10 @@ package diaryServer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -18,8 +19,7 @@ public class dbManager {
 	private final String driver = "com.mysql.jdbc.Driver";
 	private final String userName = "root";
 	private final String password = "ThisisPass123#";
-	private boolean isInitialized = false;
-	private Connection connectionObject;
+	private Connection selectConnectionObject, insertConnectionObject;
 	private static Object _syncObj = new Object();
 	private static dbManager _instance = null;
 	private List<UserData> userDataList;
@@ -30,16 +30,16 @@ public class dbManager {
 			userDataList = new ArrayList<UserData>();
 			kidsDataList = new ArrayList<KidDataInternal>();
 			Class.forName(driver).newInstance();
-			connectionObject = DriverManager.getConnection(goToiletURL, userName, password);
-			isInitialized = true;
+			selectConnectionObject = DriverManager.getConnection(goToiletURL, userName, password);
 			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, CLASS_NAME, "Connection was successful, db is initialized");
 		} catch (Exception ex) {
 			Logger.getInstance().Log(ELogLevel.critical, CLASS_NAME, CLASS_NAME, "Critical error, cannot login to the DB! " + ex.getMessage());
-			isInitialized = false;
+			return;
 		}
+		Statement selectUsersStatement = null;
 		try {
 			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, CLASS_NAME, "Getting users from DB");
-			Statement selectUsersStatement = connectionObject.createStatement();
+			selectUsersStatement = selectConnectionObject.createStatement();
 			selectUsersStatement.executeQuery(Helpers.GET_DB_SELECTION_QUERY);
 			ResultSet returnedUsers = selectUsersStatement.executeQuery(Helpers.GET_USERS_QUERY);
 			while (returnedUsers.next()) {
@@ -53,7 +53,6 @@ public class dbManager {
 
 		try {
 			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, CLASS_NAME, "Getting kids from DB");
-			Statement selectUsersStatement = connectionObject.createStatement();
 			selectUsersStatement.executeQuery(Helpers.GET_DB_SELECTION_QUERY);
 			ResultSet returnedUsers = selectUsersStatement.executeQuery(Helpers.GET_KIDS_QUERY);
 			while (returnedUsers.next()) {
@@ -63,7 +62,31 @@ public class dbManager {
 			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, CLASS_NAME, "Done.");
 		} catch (Exception ex) {
 			Logger.getInstance().Log(ELogLevel.critical, CLASS_NAME, CLASS_NAME, "Critical error, cannot get kids! " + ex.getMessage());
+		} finally {
+			if (selectUsersStatement != null) {
+				try {
+					selectUsersStatement.close();
+				} catch (Exception e) {
+					Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, CLASS_NAME, "failed to close the statement" + e.getMessage());
+				}
+			}
 		}
+
+	}
+
+	private boolean initInsertConnection() {
+		boolean connectionSucceeded = false;
+		try {
+			insertConnectionObject = DriverManager.getConnection(goToiletURL, userName, password);
+			insertConnectionObject.setAutoCommit(false);
+			Statement selectUsersStatement = insertConnectionObject.createStatement();
+			selectUsersStatement.executeQuery(Helpers.GET_DB_SELECTION_QUERY);
+			connectionSucceeded = true;
+		} catch (SQLException e) {
+			Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, "initConnection", "Failed to open connection" + e.getMessage());
+			connectionSucceeded = false;
+		}
+		return connectionSucceeded;
 	}
 
 	public static dbManager getInstance() {
@@ -90,15 +113,18 @@ public class dbManager {
 	 * @return null if not initialized, loginReturnData class holding the connecting success status and the id otherwise
 	 */
 	public loginReturnData login(String userName, String pass) {
-		if (!isInitialized) {
-			return null;
-		}
-		for (UserData currentUser : userDataList) {
-			if (currentUser.getUserName().equalsIgnoreCase(userName)) {
-				if (currentUser.getPass().equals(pass)) {
-					return new loginReturnData(currentUser.getUserType(), currentUser.getUserId());
+		String methodName = "login";
+		try {
+			for (UserData currentUser : userDataList) {
+				if (currentUser.getUserName().equalsIgnoreCase(userName)) {
+					if (currentUser.getPass().equals(pass)) {
+						return new loginReturnData(currentUser.getUserType(), currentUser.getUserId());
+					}
 				}
 			}
+		} catch (Exception ex) {
+			Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName, "Failed to login the given user: " + userName + ". error: " + ex.getMessage());
+			return null;
 		}
 		return new loginReturnData(ELoginStatus.EInvalid, "-1");
 	}
@@ -111,35 +137,64 @@ public class dbManager {
 	 * @return -1 if not initialized or failed, the id of the new event otherwise
 	 */
 	public int insertNewEvent(EventData newEvent) {
-		if (!isInitialized) {
+		String methodName = "insertNewEvent";
+		if (!initInsertConnection()) {
+			Logger.getInstance().Log(ELogLevel.critical, CLASS_NAME, methodName, "The DB is not initialized!");
 			return -1;
 		}
-		String methodName = "insertNewEvent";
 		int nextEventIdForReal = 0;
-
+		PreparedStatement selectUsersStatement = null, insertStatement = null;
 		try {
-
-			Statement selectUsersStatement = connectionObject.createStatement();
-			ResultSet nextEventId = selectUsersStatement.executeQuery(Helpers.GET_EVENTS_COUNT_QUERY);
+			selectUsersStatement = insertConnectionObject.prepareStatement(Helpers.GET_EVENTS_COUNT_QUERY);
+			ResultSet nextEventId = selectUsersStatement.executeQuery();
 			if (!nextEventId.next()) {
 				java.util.Random rans = new Random();
 				nextEventIdForReal = rans.nextInt(99999);
 			} else {
-				nextEventIdForReal = nextEventId.getInt("Total");
+				nextEventIdForReal = nextEventId.getInt("Total") * 2 + 1;
 			}
+			selectUsersStatement.close();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:00");
-			String query = Helpers.INSERT_NEW_EVENT_QUERY.replace(Helpers.ID_EVENTS_LOG, "" + nextEventIdForReal)
-					.replace(Helpers.COMMENTS, newEvent.getComments()).replace(Helpers.DATE_TIME, 
-							(newEvent.getDateTime().isEmpty() ? sdf.format(Calendar.getInstance().getTime()).toString() : newEvent.getDateTime()))
-					.replace(Helpers.INSERTING_USER_ID, newEvent.getInsertingUserId()).replace(Helpers.IS_KAKI, newEvent.getIsKaki() == true ? "1" : "0")
-					.replace(Helpers.IS_PIPI, newEvent.getIsPipi() == true ? "1" : "0").replace(Helpers.KID_ID, newEvent.getKidId())
-					.replace(Helpers.INDEPENDENCE_STAGES, newEvent.getCreatedIndependenceStagesSerialized());
 
-			selectUsersStatement.executeUpdate(query);
+			insertStatement = insertConnectionObject.prepareStatement(Helpers.INSERT_NEW_EVENT_QUERY);
+			insertStatement.setString(1, "" + nextEventIdForReal);
+			insertStatement.setString(2, (newEvent.getDateTime().isEmpty() ? sdf.format(Calendar.getInstance().getTime()).toString() : newEvent.getDateTime()));
+			insertStatement.setString(3, newEvent.getInsertingUserId());
+			insertStatement.setString(4, newEvent.getKidId());
+			insertStatement.setString(5, newEvent.getCreatedIndependenceStagesSerialized());
+			insertStatement.setString(6, newEvent.isKidIsInitiator() == true ? "1" : "0");
+			insertStatement.setString(7, newEvent.getComments());
+			insertStatement.setString(8, newEvent.getIsPipi() == true ? "1" : "0");
+			insertStatement.setString(9, newEvent.getIsKaki() == true ? "1" : "0");
+			insertStatement.setString(10, newEvent.getSuccessResult());
+
+			int retVal = insertStatement.executeUpdate();
+			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, methodName, "The new line ID: " + retVal);
 		} catch (Exception ex) {
 			Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName,
 					"Error occured during inserting new event. Event data: " + newEvent.toString() + ", error: " + ex.getMessage());
 			nextEventIdForReal = -1;
+		} finally {
+			if (selectUsersStatement != null) {
+				try {
+					selectUsersStatement.close();
+				} catch (Exception ex) {
+					Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName, "failed to close the select statement, error: " + ex.getMessage());
+				}
+			}
+			if (insertStatement != null) {
+				try {
+					insertStatement.close();
+				} catch (Exception ex) {
+					Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName, "failed to close the insert statement, error: " + ex.getMessage());
+				}
+			}
+			try {
+				insertConnectionObject.commit();
+				insertConnectionObject.close();
+			} catch (Exception ex) {
+				Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName, "failed to close the connection, error: " + ex.getMessage());
+			}
 		}
 		return nextEventIdForReal;
 	}
@@ -158,9 +213,11 @@ public class dbManager {
 		List<EventData> retVal = new ArrayList<EventData>();
 
 		if (kidId.isEmpty() || daysFromToday <= 0) {
+			Logger.getInstance().Log(ELogLevel.critical, CLASS_NAME, methodName, "The DB is not initialized!");
 			return null;
 		}
 
+		PreparedStatement selectUsersStatement = null;
 		try {
 			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, methodName, "Getting events for kid: " + kidId);
 			KidDataInternal selectedKid = null;
@@ -172,17 +229,18 @@ public class dbManager {
 			}
 
 			if (selectedKid == null) {
+				Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName, "given kid id was not found: " + kidId);
 				return null;
 			}
-
-			Statement selectUsersStatement = connectionObject.createStatement();
 			Calendar cl = Calendar.getInstance();
 			cl.add(Calendar.DAY_OF_MONTH, -daysFromToday);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
 
-			String query = Helpers.GET_EVENTS_FOR_KID_QUERY.replace(Helpers.KID_ID, selectedKid.getKidId())
-					.replace(Helpers.DATE_TIME, sdf.format(cl.getTime()));
-			ResultSet returnedEvents = selectUsersStatement.executeQuery(query);
+			selectUsersStatement = selectConnectionObject.prepareStatement(Helpers.GET_EVENTS_FOR_KID_QUERY);
+			selectUsersStatement.setString(1, selectedKid.getKidId());
+			selectUsersStatement.setString(2, sdf.format(cl.getTime()));
+			
+			ResultSet returnedEvents = selectUsersStatement.executeQuery();
 			while (returnedEvents.next()) {
 				List<IndependenceStages> stages = new ArrayList<IndependenceStages>();
 				String[] stagesAsStringArray = returnedEvents.getString("independence_stages").split(";");
@@ -197,11 +255,20 @@ public class dbManager {
 				}
 				retVal.add(new EventData(returnedEvents.getString("date_time"), returnedEvents.getString("inserting_user_id"), returnedEvents
 						.getString("kid_id"), stages, returnedEvents.getString("kid_is_initiator") == "1" ? true : false, returnedEvents.getString("comments"),
-						returnedEvents.getString("isKaki") == "1" ? true : false, returnedEvents.getString("isPipi") == "1" ? true : false));
+						returnedEvents.getString("isKaki") == "1" ? true : false, returnedEvents.getString("isPipi") == "1" ? true : false, returnedEvents
+								.getString("walkStatus")));
 			}
 			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, methodName, "Done.");
 		} catch (Exception ex) {
 			Logger.getInstance().Log(ELogLevel.critical, CLASS_NAME, methodName, "Critical error, cannot get users! " + ex.getMessage());
+		} finally {
+			if (selectUsersStatement != null) {
+				try {
+					selectUsersStatement.close();
+				} catch (SQLException e) {
+					Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName, "failed to close the statement: " + e.getMessage());
+				}
+			}
 		}
 
 		return retVal;
@@ -216,44 +283,123 @@ public class dbManager {
 	 */
 	public List<KidData> getListOfKids(String userId) {
 		String methodName = "getListOfKids";
-		if (!isInitialized) {
-			return null;
-		}
 		List<KidData> retVal = new ArrayList<KidData>();
 		try {
 			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, methodName, "Getting list of kids for: " + userId);
-			UserData givenUser = null;
-			for (UserData currentUser : userDataList) {
-				if (currentUser.getUserId().equals(userId)) {
-					givenUser = currentUser;
-					break;
-				}
-			}
+			UserData givenUser = getDataForUser(userId);
 			if (givenUser == null) {
 				return null;
 			}
 
 			for (KidDataInternal currentInternalKid : kidsDataList) {
-				if (givenUser.getUserId().equals(currentInternalKid.getGardenId())
-						||givenUser.getUserId().equals(currentInternalKid.getParentId())) {
+				if (givenUser.getUserId().equals(currentInternalKid.getGardenId()) || givenUser.getUserId().equals(currentInternalKid.getParentId())) {
 					retVal.add(currentInternalKid.toKidData());
 				}
 			}
 			Logger.getInstance().Log(ELogLevel.debug, CLASS_NAME, methodName, "Done.");
 		} catch (Exception ex) {
+			retVal = null;
 			Logger.getInstance().Log(ELogLevel.critical, CLASS_NAME, methodName, "Critical error, cannot get users! " + ex.getMessage());
 		}
 
 		return retVal;
 	}
 
-	public void close() {
-		String methodName = "close";
+	/**
+	 * based on the given UserId returns the details related to the user
+	 * 
+	 * @param userId
+	 *            the given user Id
+	 * @return a user data object, or null if not found or an error occurred
+	 */
+	public UserData getDataForUser(String userId) {
+		String methodName = "getDataForUser";
+		UserData retVal = null;
 		try {
-			connectionObject.close();
+			for (UserData currentUser : userDataList) {
+				if (currentUser.getUserId().equals(userId)) {
+					retVal = currentUser;
+					break;
+				}
+			}
 		} catch (Exception ex) {
-			Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName,
-					"Cannot close the connection, the connection will be released automatically. Error: " + ex.getMessage());
+			Logger.getInstance()
+					.Log(ELogLevel.error, CLASS_NAME, methodName, "failed to get data for given user id: " + userId + ". error: " + ex.getMessage());
 		}
+		return retVal;
+	}
+
+	/**
+	 * gets the desired statistic for the kid id
+	 * 
+	 * @param kidId
+	 *            the given kid id
+	 * @param statisticType
+	 *            the requested statistic type
+	 * @return a list of statistics
+	 */
+	public List<Statistics> getStatisticsForKidId(String kidId, EStatisticType statisticType) {
+		List<Statistics> retVal = new ArrayList<Statistics>();
+		String methodName = "getStatisticForKidId";
+
+		PreparedStatement selectUsersStatement = null;
+
+		try {
+			KidData data = getDataForKid(kidId);
+			if (data == null) {
+				Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName, "The selected given kid id does not exist: " + kidId);
+				return null;
+			}
+			switch (statisticType) {
+			case successes:
+				selectUsersStatement = selectConnectionObject.prepareStatement(Helpers.GET_DATES_FOR_EVENTS_FOR_KID_QUERY);
+				selectUsersStatement.setString(1, kidId);
+				ResultSet returnedEvents = selectUsersStatement.executeQuery();
+				Statement secondSelectStatement = selectConnectionObject.createStatement();
+				while (returnedEvents.next()) {
+					String currentDateTime = returnedEvents.getString("date_time");
+					if (currentDateTime.isEmpty()) {
+						continue;
+					}
+					currentDateTime = currentDateTime.split(" ")[0];
+					// String secondQuery = Helpers.GET_ALL_EVENTS_AND_SUCCESS_QUERY.replace(Helpers.KID_ID, kidId);
+				}
+				break;
+			case takes:
+			case timeSpaces:
+			default:
+				Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName,
+						"The selected type of statistics is not supported yet. statistic type: " + statisticType);
+				break;
+			}
+		} catch (Exception ex) {
+			Logger.getInstance().Log(
+					ELogLevel.error,
+					CLASS_NAME,
+					methodName,
+					"Error getting th statistics for the given kid id: " + kidId + "and desired staistic type: " + statisticType + ". Error: "
+							+ ex.getMessage());
+			retVal = null;
+		} finally {
+			if (selectUsersStatement != null) {
+				try {
+					selectUsersStatement.close();
+				} catch (Exception e) {
+					Logger.getInstance().Log(ELogLevel.error, CLASS_NAME, methodName, "failed to close the statement: " + e.getMessage());
+				}
+			}
+		}
+		return retVal;
+	}
+
+	public KidData getDataForKid(String kidId) {
+		KidData retVal = null;
+		for (KidDataInternal currentKid : kidsDataList) {
+			if (currentKid.getKidId().equals(kidId)) {
+				retVal = currentKid.toKidData();
+				break;
+			}
+		}
+		return retVal;
 	}
 }
