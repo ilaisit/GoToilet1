@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONWriter;
 /**
@@ -50,7 +51,8 @@ public class viewKid extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		System.out.println("trYYY view kid");
+		parseRequest(req, resp);
 	}
 
 	private void parseRequest(HttpServletRequest request,
@@ -69,30 +71,43 @@ public class viewKid extends HttpServlet {
 		System.out.println("parsing kid events");
 		// The KEY received from CLIENT is "UserID". expecting to receive the
 		// userID = KidID
-		String kidID = currentKid.getString("kidID");
+		String kidID = currentKid.getString("kidId");
 		//recive value from client p - that says how many days ago he wants data for the kids events
-		int daysFromToday = currentKid.getInt("daysFromToday");
-		List<EventData> kidEvents = dbManager.getInstance().getEventsForKid(kidID, daysFromToday);
-		JSONObject outputList = new JSONObject();
-		for (EventData eventData : kidEvents) {
-			outputList.put("dateTime", eventData.getDateTime());
-			outputList.put("insertingUserId",
-					eventData.getInsertingUserId());
-			outputList.put("kidId", eventData.getKidId());
-			// *Note: meanwhile, no createdIndependenceStages are sent
-			//outputList.put("createdIndependenceStages",
-				//	eventData.getCreatedIndependenceStages());
-			outputList.put("kidIsInitiator", eventData.isKidIsInitiator());
-			outputList.put("comments", eventData.getComments());
-			outputList.put("isKaki", eventData.getIsKaki());
-			outputList.put("isPipi", eventData.getIsPipi());
+		//int daysFromToday = currentKid.getInt("daysFromToday");
+		List<EventData> kidEvents = dbManager.getInstance().getEventsForKid(kidID, 1);
+		System.out.println("there are ");
+		System.out.println(kidEvents.size());
+		System.out.println("events for this kid");
+		
+		JSONObject responseDetailsJson = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+
+		for (int i = 0; i < kidEvents.size(); i++) {
+			JSONObject formDetailsJson = new JSONObject();
+			formDetailsJson.put("kidId", kidEvents.get(i)
+					.getKidId());
+			formDetailsJson.put("isKaki", kidEvents.get(i)
+					.getIsKaki());
+			formDetailsJson.put("dateTime", convertDate(kidEvents.get(i)
+					.getDateTime()));
+			formDetailsJson.put("insertingUserId", kidEvents
+					.get(i).getInsertingUserId());
+			formDetailsJson.put("isPipi", kidEvents.get(i)
+					.getIsPipi());
+			formDetailsJson.put("comments", kidEvents.get(i)
+					.getComments());
+			formDetailsJson.put("kidIsInitiator", kidEvents
+					.get(i).isKidIsInitiator());
+			formDetailsJson.put("successResult", kidEvents.get(i).getSuccessResult());
+
+			jsonArray.put(formDetailsJson);
 		}
-		// the key is KID_EVENTS_LIST,
-		// and the value is the list of the events of the kid
+		responseDetailsJson.put("arrayValues", jsonArray);
 		writer.object();
-		writer.key(KID_EVENTS);
-		writer.value(outputList);
+		writer.key("data");
+		writer.value(responseDetailsJson);
 		writer.endObject();
+
 	}
 
 	private String extractJsonFromRequest(HttpServletRequest request) {
@@ -117,6 +132,28 @@ public class viewKid extends HttpServlet {
 			return FAILURE;
 		}
 		return sb.toString();
+	}
+	
+	private String convertDate (String input) {
+		StringBuilder sb = new StringBuilder();
+		String year = input.substring(0,4);
+		String month = input.substring(5,7);
+		String day = input.substring(8, 10);
+		String hour = input.substring(11, 13);
+		String min = input.substring(14, 16);
+		
+		sb.append(day);
+		sb.append(".");
+		sb.append(month);
+		sb.append(".");
+		sb.append(year);
+		sb.append(" ");
+		sb.append(hour);
+		sb.append(":");
+		sb.append(min);
+		sb.append(" ");
+		String res = sb.toString();
+		return res;
 	}
 
 }

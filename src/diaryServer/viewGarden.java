@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONWriter;
 
@@ -53,6 +54,7 @@ public class viewGarden extends HttpServlet {
 
 	private void parseRequest(HttpServletRequest request,
 			HttpServletResponse response) {
+		response.setCharacterEncoding("UTF-8");
 		System.out.println("Trying to view garden");
 		String jsonReq = extractJsonFromRequest(request);
 		JSONObject currentGarden = new JSONObject(jsonReq);
@@ -64,20 +66,30 @@ public class viewGarden extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("parsing kindergarten");
+		writer.object();
+		
 		// The KEY received from CLIENT is "UserID". expecting to receive the userID = kindergartenID
-		String userID = currentGarden.getString("userID");
+		String userID = currentGarden.getString("userId");
+		writer.key("name");
+		writer.value(dbManager.getInstance().getDataForUser(userID).getUserName());
 		List<KidData> kidsList = dbManager.getInstance().getListOfKids(
 				userID);
-		JSONObject outputList = new JSONObject();
-		for (KidData kid : kidsList) {
-			outputList.put("kidName", kid.getKidName());
-			outputList.put("kidId", kid.getKidId());
-			outputList.put("imageLink", kid.getImageLink());
+		
+		JSONObject responseDetailsJson = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+
+		for (int i = 0; i < kidsList.size(); i++) {
+			JSONObject formDetailsJson = new JSONObject();
+			formDetailsJson.put("kidId", kidsList.get(i).getKidId());
+			formDetailsJson.put("kidName", kidsList.get(i).getKidName());
+			formDetailsJson
+					.put("imageLink", kidsList.get(i).getImageLink());
+
+			jsonArray.put(formDetailsJson);
 		}
-		writer.object();
+		responseDetailsJson.put("arrayValues", jsonArray);
 		writer.key(KIDS_LIST);
-		writer.value(outputList);
+		writer.value(responseDetailsJson);
 		writer.endObject();
 	}
 

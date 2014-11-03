@@ -4,4 +4,4 @@
  * and open the template in the editor.
  */
 
-var SERVER_URL = "http://10.0.0.9:8080/diaryServer"
+var SERVER_URL = "http://10.0.0.5:8080/diaryServer"
