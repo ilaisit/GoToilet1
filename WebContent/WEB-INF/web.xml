@@ -54,6 +54,16 @@
 		<servlet-name>InsertNewEvent</servlet-name>
 		<url-pattern>/newEvent</url-pattern>
 	</servlet-mapping>
+	
+			<servlet>
+		<servlet-name>Statistics</servlet-name>
+		<servlet-class>diaryServer.viewStatistics</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Statistics</servlet-name>
+		<url-pattern>/viewStatistics</url-pattern>
+	</servlet-mapping>
 
 
 </web-app>

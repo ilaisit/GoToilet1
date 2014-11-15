@@ -53,7 +53,6 @@ public class viewKid extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("trYYY view kid");
 		parseRequest(req, resp);
 	}
 
@@ -75,8 +74,8 @@ public class viewKid extends HttpServlet {
 		// userID = KidID
 		String kidID = currentKid.getString("kidId");
 		//recive value from client p - that says how many days ago he wants data for the kids events
-		//int daysFromToday = currentKid.getInt("daysFromToday");
-		List<EventData> kidEvents = dbManager.getInstance().getEventsForKid(kidID, 1);
+		int daysFromToday = currentKid.getInt("daysFromToday");
+		List<EventData> kidEvents = dbManager.getInstance().getEventsForKid(kidID, daysFromToday);
 		System.out.println("there are ");
 		System.out.println(kidEvents.size());
 		System.out.println("events for this kid");
