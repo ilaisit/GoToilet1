@@ -45,8 +45,6 @@ TEXTAREA { width: 90%; height:5%; padding: 1%; margin: 2% 4% 1% 4%; font: normal
 .up { height: 70%; width: 8%; display: inline-block; background-repeat: no-repeat; background-position: 100% 50%; background-size: contain; -webkit-background-size: contain; background-image: url('../images/down_arrow.png'); vertical-align: middle; }
 .down { height: 70%; width: 8%; display: inline-block; background-repeat: no-repeat; background-position: 100% 50%; background-size: contain; -webkit-background-size: contain; background-image: url('../images/up_arrow.png'); vertical-align: middle;}
 .end_btn { background-color: #749cd2; color:#ffffff; float: left; height: 5.5%; margin-left: 4%; margin-top: 3%; text-align: center; width: 12%; font: normal 3.5vh Arial;  border-radius: 20px; line-height: 5.5vh; }
-.back_btn, .back_btn:active, .back_btn:visited  { background-color: #749cd2; color:#ffffff; position: absolute; top: 50%; right: 0; height: 70%; margin-right: 2%; text-align: center; width: 11%; font: normal 3.5vh Arial;  border-radius: 20px; line-height: 5.5vh; 
-            background-image: url('../images/back_arrow.png'); background-size: contain; background-repeat: no-repeat; background-position: center right; text-decoration: none;}
 .open_bar  { background-color: #8d8e8d; padding-right: 4%; font: bold 3vh Arial; color: #fff; line-height: 5.5vh; height: 5.5%;}
             
 @media only screen and (orientation:portrait){
@@ -57,7 +55,7 @@ TEXTAREA { width: 90%; height:5%; padding: 1%; margin: 2% 4% 1% 4%; font: normal
 }
 
 .mm-list li a{font-size: 5vh; line-height: 5hv; padding:5%; }
-.MediumTextTable { margin: 0 4%; padding:15px; direction: rtl;}
-.MediumTextTableTD { margin: 0 4%;  padding:15px;direction: rtl;}
-.thirdLevelHeader { margin: 0 4%;  padding:10px;    font-size: medium;  }	
-.secondLevelHeader { margin: 0 4%;     padding:10px; font-size: x-large; }
+.MediumTextTable { padding:15px; direction: rtl;}
+.MediumTextTableTD { padding:15px;direction: rtl;}
+.thirdLevelHeader {     padding:10px;    font-size: medium;  }	
+.secondLevelHeader {     padding:10px; font-size: x-large; }
