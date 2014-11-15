@@ -1,4 +1,4 @@
-package diaryServer;
+package dataTypes;
 
 public class loginTry {
 	private String userName;

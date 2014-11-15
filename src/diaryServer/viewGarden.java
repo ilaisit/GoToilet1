@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONWriter;
 
+import dataTypes.KidData;
+
 public class viewGarden extends HttpServlet {
 	/**
 	 * 

@@ -1,4 +1,5 @@
-package diaryServer;
+package dataTypes;
+
 
 public class KidDataInternal {
 	private String kidName;

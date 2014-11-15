@@ -10,6 +10,8 @@ import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import enums.ELogLevel;
+
 public class Logger {
 	public static String FILES_SEPERATOR = System.getProperty("file.separator");
 	

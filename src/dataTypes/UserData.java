@@ -1,4 +1,6 @@
-package diaryServer;
+package dataTypes;
+
+import enums.ELoginStatus;
 
 public class UserData {
 	private String userName;

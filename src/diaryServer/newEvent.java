@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 import org.json.JSONWriter;
 
+import dataTypes.EventData;
+
 /**
  * REQUEST STRUCTUR FOR NEW EVENT IS DONE WHEN ASKING FOR /newEvent (url page)
  * STRCUTRE: (key=value)

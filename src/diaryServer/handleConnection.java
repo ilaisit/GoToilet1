@@ -13,6 +13,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONWriter;
 
+import dataTypes.EventData;
+import dataTypes.KidData;
+import dataTypes.loginTry;
+import enums.ELogLevel;
+
 public class handleConnection extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

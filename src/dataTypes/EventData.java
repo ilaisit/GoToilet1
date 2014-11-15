@@ -1,4 +1,4 @@
-package diaryServer;
+package dataTypes;
 import java.util.ArrayList;
 import java.util.List;
 

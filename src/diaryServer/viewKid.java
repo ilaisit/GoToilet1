@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONWriter;
+
+import dataTypes.EventData;
 /**
  * the request must contain kidID and and daysFromToday
  * @author ilaisit

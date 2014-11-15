@@ -1,6 +1,14 @@
-package diaryServer;
+package tests;
 import java.util.ArrayList;
 import java.util.List;
+
+import dataTypes.EventData;
+import dataTypes.IndependenceStages;
+import dataTypes.KidData;
+import diaryServer.dbManager;
+import diaryServer.loginReturnData;
+import enums.ELoginStatus;
+import enums.EStatisticType;
 
 public class mainEntryPoint_testAWS_RDS {
 
@@ -44,6 +52,12 @@ public class mainEntryPoint_testAWS_RDS {
 			
 			dbManager.getInstance().insertNewEvent(new EventData("2014-07-09 13:31:00", "1", "1", new ArrayList<IndependenceStages>(), true, "", true, false, "0"));
 			dbManager.getInstance().insertNewEvent(new EventData("2014-07-09 13:31:00", "1", "1", new ArrayList<IndependenceStages>(), true, "", false, true, "0"));
+			
+			dbManager.getInstance().getStatisticsForKidId("12", EStatisticType.successes, 7);
+			dbManager.getInstance().getStatisticsForKidId("12", EStatisticType.successes, 30);
+			dbManager.getInstance().getStatisticsForKidId("12", EStatisticType.takes, 7);
+			dbManager.getInstance().getStatisticsForKidId("12", EStatisticType.takes, 30);
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

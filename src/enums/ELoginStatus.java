@@ -1,4 +1,4 @@
-package diaryServer;
+package enums;
 
 
 public enum ELoginStatus {

@@ -1,4 +1,4 @@
-package diaryServer;
+package dataTypes;
 
 public class Stages {
 	private boolean openDoor;

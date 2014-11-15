@@ -1,4 +1,7 @@
-package diaryServer;
+package dataTypes;
+
+import enums.EAssistantLevel;
+import enums.EIndependenceStages;
 
 public class IndependenceStages {
 	@Override
