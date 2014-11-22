@@ -20,6 +20,9 @@ $(document).ready(function() {
         $(".burger_btn").css("margin-top", "-" + ($(".burger_btn").height() / 2) + "px");
         $(".login_box").css("margin-top", "-" + ($(".login_box").height() / 1.5) + "px");
         $(".login_box").css("margin-right", "-" + ($(".login_box").width() / 2) + "px");
+        
+        $(".spinner").css("margin-top", "-" + ($(".spinner").height() / 2) + "px");
+        $(".spinner").css("margin-left", "-" + ($(".spinner").width() / 2) + "px");
     }
     
     fixElementsApperance();
@@ -41,7 +44,7 @@ $(document).ready(function() {
                 onGetDataFromServer(resData);
             },
             error: function() {
-                document.getElementById("loader").style.fontSize = "none";
+                document.getElementById("loader").style.display = "none";
                 alert("server error");
             }
         });

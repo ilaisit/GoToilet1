@@ -6,6 +6,7 @@
 
 
 
+
 var UID = 0;
 var KIDID = 0;
 
@@ -25,6 +26,30 @@ formValues["radio-lift-pants"] = "fullHelp";
 formValues["radio-flush"] = "fullHelp";
 formValues["radio-wash-hands"] = "fullHelp";
 formValues["radio-wipe-hands"] = "fullHelp";
+
+
+function getTime() {
+    $.ajax({
+        url: SERVER_URL + "/getTime",
+        method: 'GET',
+        success: function(resData) {
+            fixTime(resData);
+        },
+        error: function() {
+            alert("server error");
+        }
+    });
+}
+
+
+function fixTime(resData) {
+    var data = JSON.parse(resData);
+    var time = data.time;
+    var date = data.date;
+    
+    $("#currentTime").val(time);
+    $("#currentDate").val(date);
+}
 
 function buildJSONObject() {
     var obj = {
@@ -54,6 +79,7 @@ function buildJSONObject() {
 
 
 $(document).ready(function() {
+    getTime();
     $("#my-menu").mmenu();
     document.body.style = "height: " + $(document).height();
     +"px";

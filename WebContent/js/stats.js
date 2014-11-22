@@ -6,16 +6,19 @@
 
 google.load("visualization", "1", {packages: ["corechart"]});
 
-function getChildren() {
+function getData(type) {
     var data = {
-        kidId: QueryString.id
-    };
+        kidId: QueryString.id,
+        statisticType: type,
+        daysFromToday: 30
+     };
     $.ajax({
-        url: SERVER_URL + "/viewKid",
-        method: 'POST',
+        url: SERVER_URL + "/viewStatistics",
+        method: 'GET',
         data: JSON.stringify(data),
         success: function(resData) {
-            addChildInfo(resData);
+            var parsedData = JSON.parse(resData);
+            setTableData(parsedData.data.arrayValues);
         },
         error: function() {
             alert("server error");
@@ -34,18 +37,16 @@ function fixElementsApperance() {
 
 }
 
-function setTables() {
+function setTableData(serverData) {
     
     google.setOnLoadCallback(drawChart);
     function drawChart() {
-        alert("4");
-        var data = google.visualization.arrayToDataTable([
-            ['הצלחות', 'ימים'],
-            ['2013', 1000],
-            ['2014', 1170],
-            ['2015', 660],
-            ['2016', 1030]
-        ]);
+        var parsedData =  new Array();
+        parsedData[0] = ['הצלחות', 'ימים'];
+        for (var i = 0; i < serverData.length; i++) {
+            parsedData[i+1] = [serverData[i].value, serverData[i].date];
+        }
+        var data = google.visualization.arrayToDataTable(parsedData);
 
         var options = {
             title: 'הצלחות',
@@ -55,23 +56,24 @@ function setTables() {
             'height': $("#mainContent").height() * 0.65
         };
 
-        alert("3");
         var chart1 = new google.visualization.AreaChart(document.getElementById('chart_div1'));
-        var chart2 = new google.visualization.AreaChart(document.getElementById('chart_div2'));
+        //var chart2 = new google.visualization.AreaChart(document.getElementById('chart_div2'));
         chart1.draw(data, options);
-        chart2.draw(data, options);
+        //chart2.draw(data, options);
     }
 }
 
 
 $(document).ready(function() {
+    getData('successes');
+    
     $("#my-menu").mmenu();
     document.body.style = "height: " + $(document).height();
     $(window).on('resize', fixElementsApperance);
     $(window).on("orientationchange", fixElementsApperance);
 
     fixElementsApperance();
-    setTables();
+    
 
 
     //alert(document.getElementById("childName") + ":::" + QueryString.name);
